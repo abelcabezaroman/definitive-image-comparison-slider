@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Definitive Img Comparison slider</title>
+    <link rel="stylesheet" href="src/dics.css">
+    <script src="src/dics.js"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', domReady);
+
+        function domReady() {
+            new Dics({
+                container: document.querySelector('[data-function="dics"]'),
+                startPosition: 50,
+                data: [
+                    {},
+                    {}
+                ],
+            });
+        }
+    </script>
+
+</head>
+<body>
+
+<div data-function="dics" style="width: 750px;height: 500px">
+    <img src="src/img/01.jpg" alt="japan">
+    <img src="src/img/03.jpg" alt="japan">
+    <img src="src/img/04.jpg" alt="japan">
+    <img src="src/img/01-filter.jpg" alt="japan">
+</div>
+</body>
+</html>

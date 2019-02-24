@@ -1,0 +1,23 @@
+.b-dics {
+    display   : flex;
+    width     : 100%;
+    max-width : 100%;
+    position  : relative;
+}
+
+.b-dics__image-container {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.b-dics__image {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+}
