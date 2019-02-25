@@ -1,9 +1,9 @@
 /*
- * Dics: Slider to quickly compare two images.
+ * Dics: Simple multiple image comparison.
  *
- * By Max Ulyanov
- * Src: https://github.com/M-Ulyanov/Dics/
- * Example https://m-ulyanov.github.io/image-comparison/
+ * By Abel Cabeza Román
+ * Src:
+ * Example
  */
 
 (function (root) {
@@ -24,7 +24,8 @@
             clearEmpty: true
         });
         this.container            = this.options.container;
-        this.images               = this._buildImages();
+        this.images               = this._getImages();
+        this.sliders              = [];
         // this.labels               = [this.options.data[0].label, this.options.data[1].label];
         this._animateInterval     = null;
         this._comparisonSeparator = null;
@@ -35,30 +36,19 @@
         }
 
         this._build();
-        // this._setEvents();
+        this._setEvents();
     }
 
-    Dics.prototype._buildImages = function () {
-        let images       = this.container.querySelectorAll('img');
-        let imagesLength = images.length;
+    Dics.prototype._getImages = function () {
+        return this.container.querySelectorAll('img');
+    };
 
-        let initialImagesContainerWidth = this.container.offsetWidth / imagesLength;
+    Dics.prototype._createElement = function (elementClass, className) {
+        let newElement = document.createElement(elementClass);
 
-        for (let i = 0; i < imagesLength; i++) {
-            let image      = images[i];
-            let newElement = document.createElement('div');
+        newElement.classList.add(className);
 
-            newElement.classList.add('b-dics__image-container');
-            image.classList.add('b-dics__image');
-
-
-            newElement.appendChild(image);
-            this.container.appendChild(newElement);
-
-            image.style.left = `${ i * -initialImagesContainerWidth }px`;
-
-        }
-        return images;
+        return newElement;
     };
 
 
@@ -67,36 +57,34 @@
      * @private
      */
     Dics.prototype._build = function () {
+        let dics = this;
+
         this.options.container.classList.add('b-dics');
+        let imagesLength = dics.images.length;
 
-        for (let image of this.images) {
+        let initialImagesContainerWidth = dics.container.offsetWidth / imagesLength;
+
+        for (let i = 0; i < imagesLength; i++) {
+            let image          = dics.images[i];
+            let section        = dics._createElement('div', 'b-dics__section');
+            let imageContainer = dics._createElement('div', 'b-dics__image-container');
+            let slider         = dics._createElement('div', 'b-dics__slider');
+            this.sliders.push(slider);
+
+            image.classList.add('b-dics__image');
+
+            section.appendChild(imageContainer);
+            imageContainer.appendChild(image);
+
+            if (i < imagesLength - 1) {
+                section.appendChild(slider);
+            }
+
+            dics.container.appendChild(section);
+
+            image.style.left = `${ i * -initialImagesContainerWidth }px`;
+
         }
-        // for (let i = 0; i < 2; i++) {
-        //     let item = document.createElement('div');
-        //     item.classList.add('comparison-item');
-        //
-        //     let content = document.createElement('div');
-        //     content.classList.add('comparison-item__content');
-        //     if (this.labels[i]) {
-        //         content.innerHTML = '<div class="comparison-item__label">' + this.labels[i] + '</div>';
-        //     }
-        //     this.images[i].classList.add('comparison-item__image');
-        //     content.appendChild(this.images[i]);
-        //     item.appendChild(content);
-        //
-        //     if (i === 0) {
-        //         item.classList.add('comparison-item--first');
-        //         item.style.width          = this.options.startPosition + '%';
-        //         this._comparisonSeparator = document.createElement('div');
-        //         this._comparisonSeparator.classList.add('comparison-separator');
-        //         this._comparisonSeparator.innerHTML = '<div class="comparison-control"><div class="comparison-control__mask"></div></div>';
-        //         item.appendChild(this._comparisonSeparator);
-        //     }
-        //
-        //     this._items.push(item);
-        //     this.container.appendChild(item);
-        // }
-
     };
 
 
@@ -105,39 +93,59 @@
      * @private
      */
     Dics.prototype._setEvents = function () {
-        let comparison = this;
+        let dics = this;
 
-        comparison.container.addEventListener('click', function (event) {
-            comparison._calcPosition(event);
+        dics.container.addEventListener('click', function (event) {
+            dics._calcPosition(event);
         });
 
-        utils.setMultiEvents(comparison._comparisonSeparator, ['mousedown', 'touchstart'], function () {
-            comparison._comparisonSeparator.classList.add('actived');
-        });
+        for (let slider of dics.sliders) {
+            utils.setMultiEvents(slider, ['mousedown', 'touchstart'], function () {
+                slider.classList.add('b-dics__slider--active');
+            });
+
+            utils.setMultiEvents(slider, ['mousemove', 'touchmove'], function () {
+                dics._calcPosition(event);
+            });
+
+        }
 
         utils.setMultiEvents(document.body, ['mouseup', 'touchend'], function () {
-            comparison._comparisonSeparator.classList.remove('actived');
+            dics.container.querySelector('.b-dics__slider--active').classList.remove('b-dics__slider--active');
         });
 
-        utils.setMultiEvents(document.body, ['mousemove', 'touchmove'], function (event) {
-            if (comparison._comparisonSeparator.classList.contains('actived')) {
-                comparison._calcPosition(event);
-                if (document['selection']) {
-                    document['selection'].empty();
-                }
-            }
-        });
+        // utils.setMultiEvents(dics._comparisonSeparator, ['mousedown', 'touchstart'], function () {
+        //     dics._comparisonSeparator.classList.add('actived');
+        // });
+        //
+        // utils.setMultiEvents(document.body, ['mouseup', 'touchend'], function () {
+        //     dics._comparisonSeparator.classList.remove('actived');
+        // });
+        //
+        // utils.setMultiEvents(document.body, ['mousemove', 'touchmove'], function (event) {
+        //     if (dics._comparisonSeparator.classList.contains('actived')) {
+        //         dics._calcPosition(event);
+        //         if (document['selection']) {
+        //             document['selection'].empty();
+        //         }
+        //     }
+        // });
 
         utils.setMultiEvents(window, ['resize', 'load'], function () {
-            comparison._setImageSize();
+            dics._setImageSize();
         });
 
-        for (let i = 0; i < comparison.images.length; i++) {
-            comparison.images[i].addEventListener('dragstart', function (e) {
+
+        this._disableImageDrag();
+
+    };
+
+    Dics.prototype._disableImageDrag = function () {
+        for (let i = 0; i < this.images.length; i++) {
+            this.images[i].addEventListener('dragstart', function (e) {
                 e.preventDefault();
             });
         }
-
     };
 
 
@@ -158,7 +166,9 @@
         else if (positionInPercent < 0) {
             positionInPercent = 0;
         }
-        this._controllerPosition(positionInPercent.toFixed(2), event.type);
+
+        console.log('##ABEL## >> Dics >>  _calcPosition', positionInPercent.toFixed(2), event.type);
+        // this._controllerPosition(positionInPercent.toFixed(2), event.type);
     };
 
 
