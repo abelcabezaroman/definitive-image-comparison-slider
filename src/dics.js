@@ -95,56 +95,64 @@
     Dics.prototype._setEvents = function () {
         let dics = this;
 
+        dics._disableImageDrag();
+
         dics.container.addEventListener('click', function (event) {
             dics._calcPosition(event);
         });
 
+        let listener = function () {
+            dics._calcPosition(event);
+        };
+
         for (let slider of dics.sliders) {
             utils.setMultiEvents(slider, ['mousedown', 'touchstart'], function () {
                 slider.classList.add('b-dics__slider--active');
-            });
 
-            utils.setMultiEvents(slider, ['mousemove', 'touchmove'], function () {
-                dics._calcPosition(event);
+                utils.setMultiEvents(dics.container, ['mousemove', 'touchmove'], listener);
             });
-
         }
+        console.log('##ABEL## >> Dics >>  _setEvents', dics);
 
-        utils.setMultiEvents(document.body, ['mouseup', 'touchend'], function () {
-            dics.container.querySelector('.b-dics__slider--active').classList.remove('b-dics__slider--active');
-        });
 
-        // utils.setMultiEvents(dics._comparisonSeparator, ['mousedown', 'touchstart'], function () {
-        //     dics._comparisonSeparator.classList.add('actived');
-        // });
-        //
-        // utils.setMultiEvents(document.body, ['mouseup', 'touchend'], function () {
-        //     dics._comparisonSeparator.classList.remove('actived');
-        // });
-        //
-        // utils.setMultiEvents(document.body, ['mousemove', 'touchmove'], function (event) {
-        //     if (dics._comparisonSeparator.classList.contains('actived')) {
-        //         dics._calcPosition(event);
-        //         if (document['selection']) {
-        //             document['selection'].empty();
-        //         }
-        //     }
-        // });
+        let listener2 = function () {
+            let activeElements = dics.container.querySelectorAll('.b-dics__slider--active');
+
+            for (let activeElement of activeElements) {
+                activeElement.classList.remove('b-dics__slider--active');
+                utils.removeMultiEvents(dics.container, ['mousemove', 'touchmove'], listener);
+            }
+        };
+
+        utils.setMultiEvents(document.body, ['mouseup', 'touchend'], listener2);
+
 
         utils.setMultiEvents(window, ['resize', 'load'], function () {
             dics._setImageSize();
         });
 
 
-        this._disableImageDrag();
 
     };
 
     Dics.prototype._disableImageDrag = function () {
         for (let i = 0; i < this.images.length; i++) {
+            this.sliders[i].addEventListener('dragstart', function (e) {
+                e.preventDefault();
+            });
             this.images[i].addEventListener('dragstart', function (e) {
                 e.preventDefault();
             });
+        }
+    };
+
+    Dics.prototype._removeActiveElements = function () {
+        console.log('##ABEL## >> Dics >>  _setEvents', Dics.prototype);
+        let activeElements = Dics.container.querySelectorAll('.b-dics__slider--active');
+
+        for (let activeElement of activeElements) {
+            activeElement.classList.remove('b-dics__slider--active');
+            utils.removeMultiEvents(Dics.container, ['mousemove', 'touchmove'], Dics.prototype._removeActiveElements);
         }
     };
 
@@ -266,6 +274,7 @@
      */
     let utils = {
 
+
         /**
          * Native extend object
          * @param target
@@ -317,6 +326,18 @@
         setMultiEvents: function (element, events, func) {
             for (let i = 0; i < events.length; i++) {
                 element.addEventListener(events[i], func);
+            }
+        },
+
+        /**
+         * Set Multi addEventListener
+         * @param element
+         * @param events
+         * @param func
+         */
+        removeMultiEvents: function (element, events, func) {
+            for (let i = 0; i < events.length; i++) {
+                element.removeEventListener(events[i], func, false);
             }
         },
 
