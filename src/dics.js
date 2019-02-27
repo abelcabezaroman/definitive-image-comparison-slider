@@ -20,27 +20,34 @@
      * @param options
      */
     function Dics(options) {
-        this.options              = utils.extend({}, [defaultOptions, options], {
+        this.options                       = utils.extend({}, [defaultOptions, options], {
             clearEmpty: true
         });
-        this.container            = this.options.container;
-        this.images               = this._getImages();
-        this.sliders              = [];
+        this.container                     = this.options.container;
+        this.images                        = this._getImages();
+        this.sliders                       = [];
         // this.labels               = [this.options.data[0].label, this.options.data[1].label];
-        this._animateInterval     = null;
-        this._comparisonSeparator = null;
-        this._items               = [];
+        this._activeSlider                 = null;
+        this._horizontalPositionForElement = null;
+        this._items                        = [];
 
         if (this.container == null) {
             console.error('Container element not found!')
         }
 
         this._build();
+        this.sections = this._getSections();
         this._setEvents();
+
     }
 
     Dics.prototype._getImages = function () {
         return this.container.querySelectorAll('img');
+    };
+
+
+    Dics.prototype._getSections = function () {
+        return this.container.querySelectorAll('[data-function="b-dics__section"]');
     };
 
     Dics.prototype._createElement = function (elementClass, className) {
@@ -69,6 +76,11 @@
             let section        = dics._createElement('div', 'b-dics__section');
             let imageContainer = dics._createElement('div', 'b-dics__image-container');
             let slider         = dics._createElement('div', 'b-dics__slider');
+
+            section.setAttribute('data-function', 'b-dics__section');
+            section.style.width = `${initialImagesContainerWidth}px`;
+            slider.style.left   = `${initialImagesContainerWidth * (i + 1)}px`;
+
             this.sliders.push(slider);
 
             image.classList.add('b-dics__image');
@@ -97,16 +109,38 @@
 
         dics._disableImageDrag();
 
-        dics.container.addEventListener('click', function (event) {
-            dics._calcPosition(event);
-        });
+        let listener = function (event) {
+            console.log('##ABEL## >> listener >>  listener', dics._calcPosition(event));
+            let position = dics._calcPosition(event);
+            if (position < (dics.sections[dics._activeSlider + 1].offsetLeft + dics.sections[dics._activeSlider + 1].offsetWidth) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1].offsetLeft + dics.sections[dics._activeSlider - 1].offsetWidth))) {
 
-        let listener = function () {
-            dics._calcPosition(event);
+                let beforeSectionsWidth = dics._beforeSectionsWidth(dics.sections, dics.images, dics._activeSlider);
+
+            dics.sliders[dics._activeSlider].style.left = `${position}px`;
+
+                let calcMovePixels                            = position - beforeSectionsWidth;
+                dics.sections[dics._activeSlider].style.width = `${calcMovePixels}px`;
+                console.log('##ABEL## >> listener >>  listener _beforeNextWidth', `${dics._beforeNextWidth  }`);
+                console.log('##ABEL## >> listener >>  listener calcMovePixels', `${calcMovePixels  }`);
+                console.log('##ABEL## >> listener >>  listener _beforeActiveWidth', `${ dics._beforeActiveWidth }`);
+                console.log('##ABEL## >> listener >>  listener', `${dics._beforeNextWidth - (calcMovePixels - dics._beforeActiveWidth) }`);
+                dics.sections[dics._activeSlider + 1].style.width = `${dics._beforeNextWidth - (calcMovePixels - dics._beforeActiveWidth) }px`;
+
+                dics._setLeftToImages(dics.sections, dics.images);
+                // dics._isMovingOtherSlide(dics.sections, dics._activeSlider);
+                dics._slidesFollowSections(dics.sections, dics.sliders);
+            }
+
         };
 
-        for (let slider of dics.sliders) {
+        dics.container.addEventListener('click', listener);
+
+        for (let i = 0; i < dics.sliders.length; i++) {
+            let slider = dics.sliders[i];
             utils.setMultiEvents(slider, ['mousedown', 'touchstart'], function () {
+                dics._activeSlider      = i;
+                dics._beforeActiveWidth = dics.sections[i].offsetWidth;
+                dics._beforeNextWidth   = dics.sections[i + 1].offsetWidth;
                 slider.classList.add('b-dics__slider--active');
 
                 utils.setMultiEvents(dics.container, ['mousemove', 'touchmove'], listener);
@@ -132,7 +166,47 @@
         });
 
 
+    };
 
+    Dics.prototype._beforeSectionsWidth = function (sections, images, activeSlider) {
+        let width = 0;
+        for (let i = 0; i < sections.length; i++) {
+            let section = sections[i];
+            if (i !== activeSlider) {
+                width += section.offsetWidth;
+            } else {
+                return width
+            }
+        }
+    };
+
+    Dics.prototype._isMovingOtherSlide = function (sections, activeSlider) {
+        for (let i = 0; i < sections.length; i++) {
+            let section = sections[i];
+            if (i !== activeSlider) {
+                section.style.flex = '1';
+            }
+        }
+    };
+
+    Dics.prototype._setLeftToImages = function (sections, images) {
+        let width = 0;
+        for (let i = 0; i < images.length; i++) {
+            let image = images[i];
+
+            image.style.left = `-${width}px`;
+            width += sections[i].offsetWidth;
+        }
+    };
+
+    //TODO
+    Dics.prototype._slidesFollowSections = function (sections, sliders) {
+        let left = 0;
+        for (let i = 0; i < sections.length; i++) {
+            let section           = sections[i];
+            left += section.offsetWidth;
+            sliders[i].style.left = `${left}px`;
+        }
     };
 
     Dics.prototype._disableImageDrag = function () {
@@ -163,20 +237,9 @@
      * @private
      */
     Dics.prototype._calcPosition = function (event) {
-        let containerCoords              = this.container.getBoundingClientRect();
-        let containerWidth               = containerCoords.width;
+        let containerCoords = this.container.getBoundingClientRect();
         /** @namespace event.touches */
-        let horizontalPositionForElement = (event.clientX || event.touches[0].pageX) - containerCoords.left;
-        let positionInPercent            = horizontalPositionForElement * 100 / containerWidth;
-        if (positionInPercent > 100) {
-            positionInPercent = 100;
-        }
-        else if (positionInPercent < 0) {
-            positionInPercent = 0;
-        }
-
-        console.log('##ABEL## >> Dics >>  _calcPosition', positionInPercent.toFixed(2), event.type);
-        // this._controllerPosition(positionInPercent.toFixed(2), event.type);
+        return (event.clientX || event.touches[0].pageX) - containerCoords.left;
     };
 
 

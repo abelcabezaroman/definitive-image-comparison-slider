@@ -1,14 +1,13 @@
 .b-dics {
-    display   : flex;
+    /* display   : flex; */
     width     : 100%;
     max-width : 100%;
     position  : relative;
 }
 
 .b-dics__section {
-    flex-basis : 0;
-    flex-grow  : 1;
-    position   : relative;
+    float  : left;
+    height : 100%;
 }
 
 .b-dics__image-container {
