@@ -69,6 +69,8 @@
         this.options.container.classList.add('b-dics');
         let imagesLength = dics.images.length;
 
+        dics.options.container.style.height = `${dics._calcContainerHeight()}px`;
+
         let initialImagesContainerWidth = dics.container.offsetWidth / imagesLength;
 
         for (let i = 0; i < imagesLength; i++) {
@@ -76,7 +78,9 @@
             let section        = dics._createElement('div', 'b-dics__section');
             let imageContainer = dics._createElement('div', 'b-dics__image-container');
             let slider         = dics._createElement('div', 'b-dics__slider');
+            let text           = dics._createElement('p', 'b-dics__text');
 
+            text.appendChild(document.createTextNode(image.getAttribute('alt')));
             section.setAttribute('data-function', 'b-dics__section');
             section.style.width = `${initialImagesContainerWidth}px`;
             slider.style.left   = `${initialImagesContainerWidth * (i + 1)}px`;
@@ -86,6 +90,7 @@
             image.classList.add('b-dics__image');
 
             section.appendChild(imageContainer);
+            imageContainer.appendChild(text);
             imageContainer.appendChild(image);
 
             if (i < imagesLength - 1) {
@@ -116,7 +121,7 @@
 
                 let beforeSectionsWidth = dics._beforeSectionsWidth(dics.sections, dics.images, dics._activeSlider);
 
-            dics.sliders[dics._activeSlider].style.left = `${position}px`;
+                dics.sliders[dics._activeSlider].style.left = `${position}px`;
 
                 let calcMovePixels                            = position - beforeSectionsWidth;
                 dics.sections[dics._activeSlider].style.width = `${calcMovePixels}px`;
@@ -127,7 +132,6 @@
                 dics.sections[dics._activeSlider + 1].style.width = `${dics._beforeNextWidth - (calcMovePixels - dics._beforeActiveWidth) }px`;
 
                 dics._setLeftToImages(dics.sections, dics.images);
-                // dics._isMovingOtherSlide(dics.sections, dics._activeSlider);
                 dics._slidesFollowSections(dics.sections, dics.sliders);
             }
 
@@ -139,8 +143,8 @@
             let slider = dics.sliders[i];
             utils.setMultiEvents(slider, ['mousedown', 'touchstart'], function () {
                 dics._activeSlider      = i;
-                dics._beforeActiveWidth = dics.sections[i].offsetWidth;
-                dics._beforeNextWidth   = dics.sections[i + 1].offsetWidth;
+                dics._beforeActiveWidth = dics.sections[i].getBoundingClientRect().width;
+                dics._beforeNextWidth   = dics.sections[i + 1].getBoundingClientRect().width;
                 slider.classList.add('b-dics__slider--active');
 
                 utils.setMultiEvents(dics.container, ['mousemove', 'touchmove'], listener);
@@ -173,20 +177,19 @@
         for (let i = 0; i < sections.length; i++) {
             let section = sections[i];
             if (i !== activeSlider) {
-                width += section.offsetWidth;
+                width += section.getBoundingClientRect().width;
             } else {
                 return width
             }
         }
     };
 
-    Dics.prototype._isMovingOtherSlide = function (sections, activeSlider) {
-        for (let i = 0; i < sections.length; i++) {
-            let section = sections[i];
-            if (i !== activeSlider) {
-                section.style.flex = '1';
-            }
-        }
+    Dics.prototype._calcContainerHeight = function () {
+        let imgHeight      = this.images[0].clientHeight;
+        let imgWidth       = this.images[0].clientWidth;
+        let containerWidth = this.options.container.getBoundingClientRect().width;
+
+        return (containerWidth / imgWidth) * imgHeight;
     };
 
     Dics.prototype._setLeftToImages = function (sections, images) {
@@ -195,7 +198,7 @@
             let image = images[i];
 
             image.style.left = `-${width}px`;
-            width += sections[i].offsetWidth;
+            width += sections[i].getBoundingClientRect().width;
         }
     };
 
@@ -203,9 +206,11 @@
     Dics.prototype._slidesFollowSections = function (sections, sliders) {
         let left = 0;
         for (let i = 0; i < sections.length; i++) {
-            let section           = sections[i];
-            left += section.offsetWidth;
-            sliders[i].style.left = `${left}px`;
+            let section = sections[i];
+            left += section.getBoundingClientRect().width;
+            if (i === this._activeSlider) {
+                sliders[i].style.left = `${left}px`;
+            }
         }
     };
 
