@@ -8,7 +8,6 @@
 .b-dics__section {
     flex-basis : 0;
     flex-grow  : 1;
-    position   : relative;
 }
 
 .b-dics__image-container {

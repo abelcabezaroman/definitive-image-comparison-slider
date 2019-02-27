@@ -20,16 +20,16 @@
      * @param options
      */
     function Dics(options) {
-        this.options              = utils.extend({}, [defaultOptions, options], {
+        this.options                       = utils.extend({}, [defaultOptions, options], {
             clearEmpty: true
         });
-        this.container            = this.options.container;
-        this.images               = this._getImages();
-        this.sliders              = [];
+        this.container                     = this.options.container;
+        this.images                        = this._getImages();
+        this.sliders                       = [];
         // this.labels               = [this.options.data[0].label, this.options.data[1].label];
-        this._animateInterval     = null;
-        this._comparisonSeparator = null;
-        this._items               = [];
+        this._activeSlider                 = null;
+        this._horizontalPositionForElement = null;
+        this._items                        = [];
 
         if (this.container == null) {
             console.error('Container element not found!')
@@ -69,6 +69,9 @@
             let section        = dics._createElement('div', 'b-dics__section');
             let imageContainer = dics._createElement('div', 'b-dics__image-container');
             let slider         = dics._createElement('div', 'b-dics__slider');
+
+            slider.style.left = `${initialImagesContainerWidth * (i + 1)}px`;
+
             this.sliders.push(slider);
 
             image.classList.add('b-dics__image');
@@ -97,16 +100,17 @@
 
         dics._disableImageDrag();
 
-        dics.container.addEventListener('click', function (event) {
-            dics._calcPosition(event);
-        });
-
-        let listener = function () {
-            dics._calcPosition(event);
+        let listener = function (event) {
+            console.log('##ABEL## >> listener >>  listener', dics._calcPosition(event));
+            dics.sliders[dics._activeSlider].style.left = `${dics._calcPosition(event)}px`
         };
 
-        for (let slider of dics.sliders) {
+        dics.container.addEventListener('click', listener);
+
+        for (let i = 0; i < dics.sliders.length; i++) {
+            let slider = dics.sliders[i];
             utils.setMultiEvents(slider, ['mousedown', 'touchstart'], function () {
+                dics._activeSlider = i;
                 slider.classList.add('b-dics__slider--active');
 
                 utils.setMultiEvents(dics.container, ['mousemove', 'touchmove'], listener);
@@ -130,7 +134,6 @@
         utils.setMultiEvents(window, ['resize', 'load'], function () {
             dics._setImageSize();
         });
-
 
 
     };
@@ -163,20 +166,10 @@
      * @private
      */
     Dics.prototype._calcPosition = function (event) {
-        let containerCoords              = this.container.getBoundingClientRect();
-        let containerWidth               = containerCoords.width;
+        let containerCoords = this.container.getBoundingClientRect();
+        let containerWidth  = containerCoords.width;
         /** @namespace event.touches */
-        let horizontalPositionForElement = (event.clientX || event.touches[0].pageX) - containerCoords.left;
-        let positionInPercent            = horizontalPositionForElement * 100 / containerWidth;
-        if (positionInPercent > 100) {
-            positionInPercent = 100;
-        }
-        else if (positionInPercent < 0) {
-            positionInPercent = 0;
-        }
-
-        console.log('##ABEL## >> Dics >>  _calcPosition', positionInPercent.toFixed(2), event.type);
-        // this._controllerPosition(positionInPercent.toFixed(2), event.type);
+        return (event.clientX || event.touches[0].pageX) - containerCoords.left;
     };
 
 
