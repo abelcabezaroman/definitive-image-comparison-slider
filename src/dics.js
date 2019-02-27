@@ -112,11 +112,11 @@
         let listener = function (event) {
             console.log('##ABEL## >> listener >>  listener', dics._calcPosition(event));
             let position = dics._calcPosition(event);
-            if (position < dics.sections[dics._activeSlider + 1].offsetLeft && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1].offsetLeft + dics.sections[dics._activeSlider - 1].offsetWidth))) {
+            if (position < (dics.sections[dics._activeSlider + 1].offsetLeft + dics.sections[dics._activeSlider + 1].offsetWidth) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1].offsetLeft + dics.sections[dics._activeSlider - 1].offsetWidth))) {
 
                 let beforeSectionsWidth = dics._beforeSectionsWidth(dics.sections, dics.images, dics._activeSlider);
 
-                dics.sliders[dics._activeSlider].style.left = `${position}px`;
+            dics.sliders[dics._activeSlider].style.left = `${position}px`;
 
                 let calcMovePixels                            = position - beforeSectionsWidth;
                 dics.sections[dics._activeSlider].style.width = `${calcMovePixels}px`;
