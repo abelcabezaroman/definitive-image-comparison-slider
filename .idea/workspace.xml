@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="711d712a-694b-46dc-a0f1-6f581882e41b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="711d712a-694b-46dc-a0f1-6f581882e41b" name="Default" comment="added slider move">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dics.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/dics.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,29 +17,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="dics.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dics.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
+            <state relative-caret-position="22">
+              <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dics.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dics.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/dics.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
+            <state relative-caret-position="419">
+              <caret line="165" column="10" selection-start-line="165" selection-start-column="10" selection-end-line="165" selection-end-column="10" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -49,8 +41,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+            <state relative-caret-position="330">
+              <caret line="15" column="69" selection-start-line="15" selection-start-column="69" selection-end-line="15" selection-end-column="69" />
             </state>
           </provider>
         </entry>
@@ -61,6 +53,11 @@
     <findStrings>
       <find>images is not</find>
       <find>setM</find>
+      <find>__section</find>
+      <find>sections</find>
+      <find>data-f</find>
+      <find>act</find>
+      <find>.flex</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -69,10 +66,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/dics.css" />
-        <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/src/dics.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/src/dics.css" />
+        <option value="$PROJECT_DIR$/src/dics.js" />
       </list>
     </option>
   </component>
@@ -100,19 +97,13 @@
         <subPane>
           <expand>
             <path>
-              <item name="Definitive comparison slider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Definitive comparison slider" type="462c0819:PsiDirectoryNode" />
+              <item name="definitive-image-comparison-slider" type="b2602c69:ProjectViewProjectNode" />
+              <item name="definitive-image-comparison-slider" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Definitive comparison slider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Definitive comparison slider" type="462c0819:PsiDirectoryNode" />
+              <item name="definitive-image-comparison-slider" type="b2602c69:ProjectViewProjectNode" />
+              <item name="definitive-image-comparison-slider" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Definitive comparison slider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Definitive comparison slider" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="img" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -158,15 +149,15 @@
     <frame x="-8" y="-8" width="1936" height="1186" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2223393" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2223393" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.32913843" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32913843" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39968154" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.2894482" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -184,7 +175,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="sliders move" />
-    <option name="LAST_COMMIT_MESSAGE" value="sliders move" />
+    <MESSAGE value="gitignore" />
+    <MESSAGE value="added slider move" />
+    <option name="LAST_COMMIT_MESSAGE" value="added slider move" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/dics.css">
@@ -231,34 +224,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dics.css">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
+        <state relative-caret-position="66">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="21" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
+        <state relative-caret-position="330">
+          <caret line="15" column="69" selection-start-line="15" selection-start-column="69" selection-end-line="15" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dics.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="1" column="18" selection-start-line="1" selection-start-column="18" selection-end-line="1" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dics.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
-          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
+        <state relative-caret-position="419">
+          <caret line="165" column="10" selection-start-line="165" selection-start-column="10" selection-end-line="165" selection-end-column="10" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
     </entry>

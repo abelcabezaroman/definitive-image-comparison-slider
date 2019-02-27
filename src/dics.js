@@ -115,9 +115,10 @@
             dics.sliders[dics._activeSlider].style.left = `${position}px`;
 
             dics.sections[dics._activeSlider].style.flex = `0 0 ${position}px`;
-            dics.sections[1].style.flex                  = `1`;
-            dics.sections[2].style.flex                  = `1`;
-            dics.sections[3].style.flex                  = `1`;
+
+            dics._isMovingOtherSlide(dics.sections, dics._activeSlider);
+            dics._slidesFollowSections();
+
         };
 
         dics.container.addEventListener('click', listener);
@@ -153,7 +154,26 @@
 
     };
 
-    Dics.prototype._disableImageDrag = function () {
+    Dics.prototype._isMovingOtherSlide = function (sections, activeSlider) {
+        for (let i = 0; i < sections.length; i++) {
+            let section = sections[i];
+            if (i !== activeSlider) {
+                section.style.flex = '1';
+            }
+        }
+    };
+
+    //TODO
+    Dics.prototype._slidesFollowSections = function (sections, activeSlider) {
+        for (let i = 0; i < sections.length; i++) {
+            let section = sections[i];
+            if (i !== activeSlider) {
+                section.style.flex = '1';
+            }
+        }
+    };
+
+    Dics.prototype._disableImageDrag    = function () {
         for (let i = 0; i < this.images.length; i++) {
             this.sliders[i].addEventListener('dragstart', function (e) {
                 e.preventDefault();
