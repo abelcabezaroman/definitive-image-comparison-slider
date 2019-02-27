@@ -36,11 +36,18 @@
         }
 
         this._build();
+        this.sections = this._getSections();
         this._setEvents();
+
     }
 
     Dics.prototype._getImages = function () {
         return this.container.querySelectorAll('img');
+    };
+
+
+    Dics.prototype._getSections = function () {
+        return this.container.querySelectorAll('[data-function="b-dics__section"]');
     };
 
     Dics.prototype._createElement = function (elementClass, className) {
@@ -70,7 +77,9 @@
             let imageContainer = dics._createElement('div', 'b-dics__image-container');
             let slider         = dics._createElement('div', 'b-dics__slider');
 
-            slider.style.left = `${initialImagesContainerWidth * (i + 1)}px`;
+            section.setAttribute('data-function', 'b-dics__section');
+            section.style.flex = `0 0 ${initialImagesContainerWidth}px`;
+            slider.style.left  = `${initialImagesContainerWidth * (i + 1)}px`;
 
             this.sliders.push(slider);
 
@@ -102,7 +111,13 @@
 
         let listener = function (event) {
             console.log('##ABEL## >> listener >>  listener', dics._calcPosition(event));
-            dics.sliders[dics._activeSlider].style.left = `${dics._calcPosition(event)}px`
+            let position                                = dics._calcPosition(event);
+            dics.sliders[dics._activeSlider].style.left = `${position}px`;
+
+            dics.sections[dics._activeSlider].style.flex = `0 0 ${position}px`;
+            dics.sections[1].style.flex                  = `1`;
+            dics.sections[2].style.flex                  = `1`;
+            dics.sections[3].style.flex                  = `1`;
         };
 
         dics.container.addEventListener('click', listener);
@@ -167,7 +182,6 @@
      */
     Dics.prototype._calcPosition = function (event) {
         let containerCoords = this.container.getBoundingClientRect();
-        let containerWidth  = containerCoords.width;
         /** @namespace event.touches */
         return (event.clientX || event.touches[0].pageX) - containerCoords.left;
     };
