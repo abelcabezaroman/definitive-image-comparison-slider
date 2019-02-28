@@ -10,8 +10,9 @@
 
     const defaultOptions = {
         container: null,
-        startPosition: 50,
-        data: null
+        data: null,
+        filters: null,
+        hideTexts: null
     };
 
 
@@ -20,16 +21,15 @@
      * @param options
      */
     function Dics(options) {
-        this.options                       = utils.extend({}, [defaultOptions, options], {
+        this.options       = utils.extend({}, [defaultOptions, options], {
             clearEmpty: true
         });
-        this.container                     = this.options.container;
-        this.images                        = this._getImages();
-        this.sliders                       = [];
+        this.container     = this.options.container;
+        this.images        = this._getImages();
+        this.sliders       = [];
         // this.labels               = [this.options.data[0].label, this.options.data[1].label];
-        this._activeSlider                 = null;
-        this._horizontalPositionForElement = null;
-        this._items                        = [];
+        this._activeSlider = null;
+        this._items        = [];
 
         if (this.container == null) {
             console.error('Container element not found!')
@@ -66,7 +66,8 @@
     Dics.prototype._build = function () {
         let dics = this;
 
-        this.options.container.classList.add('b-dics');
+        dics._applyGlobalClass(dics.options);
+
         let imagesLength = dics.images.length;
 
         dics.options.container.style.height = `${dics._calcContainerHeight()}px`;
@@ -78,9 +79,11 @@
             let section        = dics._createElement('div', 'b-dics__section');
             let imageContainer = dics._createElement('div', 'b-dics__image-container');
             let slider         = dics._createElement('div', 'b-dics__slider');
-            let text           = dics._createElement('p', 'b-dics__text');
 
-            text.appendChild(document.createTextNode(image.getAttribute('alt')));
+            dics._applyFilter(image, i, dics.options.filters);
+            dics._createAltText(image, imageContainer);
+
+
             section.setAttribute('data-function', 'b-dics__section');
             section.style.width = `${initialImagesContainerWidth}px`;
             slider.style.left   = `${initialImagesContainerWidth * (i + 1)}px`;
@@ -90,7 +93,6 @@
             image.classList.add('b-dics__image');
 
             section.appendChild(imageContainer);
-            imageContainer.appendChild(text);
             imageContainer.appendChild(image);
 
             if (i < imagesLength - 1) {
@@ -225,6 +227,34 @@
         }
     };
 
+    Dics.prototype._applyFilter = function (image, index, filters) {
+        if (filters) {
+            image.style.filter = filters[index];
+        }
+    };
+
+    Dics.prototype._applyGlobalClass = function ( options) {
+        let container = options.container;
+
+        container.classList.add('b-dics');
+
+        if (options.hideTexts) {
+            container.classList.add('b-dics--hide-texts');
+
+        }
+    };
+    Dics.prototype._createAltText    = function (image, imageContainer) {
+        let textContent = image.getAttribute('alt');
+        if (textContent) {
+            let text = this._createElement('p', 'b-dics__text');
+
+            text.appendChild(document.createTextNode(textContent));
+
+            imageContainer.appendChild(text);
+        }
+    };
+
+
     Dics.prototype._removeActiveElements = function () {
         console.log('##ABEL## >> Dics >>  _setEvents', Dics.prototype);
         let activeElements = Dics.container.querySelectorAll('.b-dics__slider--active');
@@ -243,8 +273,10 @@
      */
     Dics.prototype._calcPosition = function (event) {
         let containerCoords = this.container.getBoundingClientRect();
+        let xPixel          = !isNaN(event.clientX) ? event.clientX : event.touches[0].pageX;
+
         /** @namespace event.touches */
-        return (event.clientX || event.touches[0].pageX) - containerCoords.left;
+        return containerCoords.left < xPixel ? xPixel - containerCoords.left : 0;
     };
 
 

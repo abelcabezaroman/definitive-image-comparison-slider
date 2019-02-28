@@ -1,3 +1,5 @@
+@import 'assets/style.css';
+
 .b-dics {
     /* display   : flex; */
     width     : 100%;
@@ -8,6 +10,11 @@
 .b-dics__section {
     float  : left;
     height : 100%;
+}
+
+.b-dics__slider:hover :before {
+    color        : #fff;
+    border-color : #fff;
 }
 
 .b-dics__text {
@@ -25,6 +32,8 @@
     text-align  : center;
     width       : 50%;
     margin      : 15px 0;
+    transition  : 0.25s background-color ease-in-out;
+
 }
 
 .b-dics__image-container {
@@ -46,28 +55,35 @@
 }
 
 .b-dics__slider {
-    position  : absolute;
-    left      : 100%;
-    top       : 0;
-    cursor    : pointer;
-    transform : translateX(-50%);
-    height    : 100%;
-    width     : 5px;
-    padding   : 0 30px;
-    z-index   : 1;
+    position   : absolute;
+    left       : 100%;
+    top        : 0;
+    cursor     : pointer;
+    transform  : translateX(-50%);
+    height     : 100%;
+    width      : 5px;
+    padding    : 0 30px;
+    z-index    : 1;
+    transition : 0.25s border-color, color ease-in-out;
+
 }
 
 .b-dics__slider:before {
-    content   : '';
-    display   : block;
-    width     : 26px;
-    height    : 26px;
-    border    : 3px solid #ffffff90;
-    position  : absolute;
-    top       : 50%;
-    left      : 50%;
-    transform : translate(-50%, -50%);
-    z-index   : 1;
+    content       : '\e900';
+    font-family   : 'icomoon' !important;
+    display       : block;
+    padding       : 7px;
+    border-radius : 100%;
+    border        : 3px solid #ffffff90;
+    color         : #ffffff90;
+    position      : absolute;
+    top           : 50%;
+    left          : 50%;
+    transform     : translate(-50%, -50%) rotate(90deg);
+    z-index       : 2;
+    font-size     : 25px;
+    transition    : 0.25s color ease-in-out, border 0.25s ease-in-out;
+
 }
 
 .b-dics__slider:after {
@@ -77,7 +93,31 @@
     top              : 0;
     transform        : translateX(-50%);
     height           : 100%;
-    width            : 5px;
+    width            : 3px;
     background-color : #ffffff90;
     z-index          : 1;
+    transition       : 0.25s background-color ease-in-out;
+}
+
+.b-dics__image-container:hover .b-dics__text, .b-dics__slider:hover:after {
+    background-color : #fff;
+}
+
+.b-dics__slider:hover:before {
+    color        : #fff;
+    border-color : #fff;
+}
+
+/******************************************************************************
+/  #Hide Texts
+/******************************************************************************/
+
+.b-dics--hide-texts .b-dics__text {
+    background : #ffffff;
+    opacity    : 0;
+    transition : 0.25s opacity ease-in-out;
+}
+
+.b-dics--hide-texts .b-dics__image-container:hover .b-dics__text {
+    opacity : 1;
 }

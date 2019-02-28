@@ -13,8 +13,19 @@
 
         function domReady() {
             new Dics({
-                container: document.querySelector('[data-function="b-dics"]')
+                container: document.querySelectorAll('[data-function="b-dics"]')[0]
             });
+
+            new Dics({
+                container: document.querySelectorAll('[data-function="b-dics"]')[1],
+                hideTexts: true
+            });
+
+            new Dics({
+                container: document.querySelectorAll('[data-function="b-dics"]')[2],
+                filters: ['blur(3px)', 'grayscale(1)', 'sepia(1)', 'saturate(3)']
+            });
+
         }
     </script>
 
@@ -22,10 +33,25 @@
 <body>
 
 <div data-function="b-dics" style="width: 750px">
+    <img src="src/img/01.jpg">
+    <img src="src/img/02.jpg" alt="Japan Yellow">
+    <img src="src/img/03.jpg" alt="Japan Orange">
+    <img src="src/img/04.jpg" alt="Japan Black & White">
+</div>
+
+<div data-function="b-dics" style="width: 750px">
     <img src="src/img/01.jpg" alt="Japan">
     <img src="src/img/02.jpg" alt="Japan Yellow">
     <img src="src/img/03.jpg" alt="Japan Orange">
     <img src="src/img/04.jpg" alt="Japan Black & White">
+</div>
+
+
+<div data-function="b-dics" style="width: 750px">
+    <img src="src/img/01.jpg" alt="Japan blur">
+    <img src="src/img/01.jpg" alt="Japan grayscale">
+    <img src="src/img/01.jpg" alt="Japan sepia">
+    <img src="src/img/01.jpg" alt="Japan saturate">
 </div>
 </body>
 </html>
