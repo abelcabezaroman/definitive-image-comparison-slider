@@ -12,7 +12,8 @@
         container: null,
         data: null,
         filters: null,
-        hideTexts: null
+        hideTexts: null,
+        linesOrientation: 'horizontal'
     };
 
 
@@ -21,15 +22,15 @@
      * @param options
      */
     function Dics(options) {
-        this.options       = utils.extend({}, [defaultOptions, options], {
+        this.options = utils.extend({}, [defaultOptions, options], {
             clearEmpty: true
         });
+
+        this._setOrientation(this.options.linesOrientation);
         this.container     = this.options.container;
         this.images        = this._getImages();
         this.sliders       = [];
-        // this.labels               = [this.options.data[0].label, this.options.data[1].label];
         this._activeSlider = null;
-        this._items        = [];
 
         if (this.container == null) {
             console.error('Container element not found!')
@@ -72,7 +73,7 @@
 
         dics.options.container.style.height = `${dics._calcContainerHeight()}px`;
 
-        let initialImagesContainerWidth = dics.container.offsetWidth / imagesLength;
+        let initialImagesContainerWidth = dics.container[dics.options.offsetField] / imagesLength;
 
         for (let i = 0; i < imagesLength; i++) {
             let image          = dics.images[i];
@@ -117,20 +118,15 @@
         dics._disableImageDrag();
 
         let listener = function (event) {
-            console.log('##ABEL## >> listener >>  listener', dics._calcPosition(event));
             let position = dics._calcPosition(event);
-            if (position < (dics.sections[dics._activeSlider + 1].offsetLeft + dics.sections[dics._activeSlider + 1].offsetWidth) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1].offsetLeft + dics.sections[dics._activeSlider - 1].offsetWidth))) {
+            if (position < (dics.sections[dics._activeSlider + 1].offsetLeft + dics.sections[dics._activeSlider + 1][dics.options.offsetField]) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1].offsetLeft + dics.sections[dics._activeSlider - 1][dics.options.offsetField]))) {
 
                 let beforeSectionsWidth = dics._beforeSectionsWidth(dics.sections, dics.images, dics._activeSlider);
 
                 dics.sliders[dics._activeSlider].style.left = `${position}px`;
 
-                let calcMovePixels                            = position - beforeSectionsWidth;
-                dics.sections[dics._activeSlider].style.width = `${calcMovePixels}px`;
-                console.log('##ABEL## >> listener >>  listener _beforeNextWidth', `${dics._beforeNextWidth  }`);
-                console.log('##ABEL## >> listener >>  listener calcMovePixels', `${calcMovePixels  }`);
-                console.log('##ABEL## >> listener >>  listener _beforeActiveWidth', `${ dics._beforeActiveWidth }`);
-                console.log('##ABEL## >> listener >>  listener', `${dics._beforeNextWidth - (calcMovePixels - dics._beforeActiveWidth) }`);
+                let calcMovePixels                                = position - beforeSectionsWidth;
+                dics.sections[dics._activeSlider].style.width     = `${calcMovePixels}px`;
                 dics.sections[dics._activeSlider + 1].style.width = `${dics._beforeNextWidth - (calcMovePixels - dics._beforeActiveWidth) }px`;
 
                 dics._setLeftToImages(dics.sections, dics.images);
@@ -152,7 +148,6 @@
                 utils.setMultiEvents(dics.container, ['mousemove', 'touchmove'], listener);
             });
         }
-        console.log('##ABEL## >> Dics >>  _setEvents', dics);
 
 
         let listener2 = function () {
@@ -204,7 +199,6 @@
         }
     };
 
-    //TODO
     Dics.prototype._slidesFollowSections = function (sections, sliders) {
         let left = 0;
         for (let i = 0; i < sections.length; i++) {
@@ -233,7 +227,7 @@
         }
     };
 
-    Dics.prototype._applyGlobalClass = function ( options) {
+    Dics.prototype._applyGlobalClass = function (options) {
         let container = options.container;
 
         container.classList.add('b-dics');
@@ -256,13 +250,21 @@
 
 
     Dics.prototype._removeActiveElements = function () {
-        console.log('##ABEL## >> Dics >>  _setEvents', Dics.prototype);
         let activeElements = Dics.container.querySelectorAll('.b-dics__slider--active');
 
         for (let activeElement of activeElements) {
             activeElement.classList.remove('b-dics__slider--active');
             utils.removeMultiEvents(Dics.container, ['mousemove', 'touchmove'], Dics.prototype._removeActiveElements);
         }
+    };
+
+
+    Dics.prototype._setOrientation = function (linesOrientation) {
+        if (linesOrientation === 'horizontal') {
+            this.options.offsetField   = 'offsetWidth';
+            this.options.positionField = 'left';
+        }
+
     };
 
 
@@ -275,87 +277,7 @@
         let containerCoords = this.container.getBoundingClientRect();
         let xPixel          = !isNaN(event.clientX) ? event.clientX : event.touches[0].pageX;
 
-        /** @namespace event.touches */
         return containerCoords.left < xPixel ? xPixel - containerCoords.left : 0;
-    };
-
-
-    /**
-     * Controller position
-     * @param positionInPercent
-     * @param eventType
-     * @private
-     */
-    Dics.prototype._controllerPosition = function (positionInPercent, eventType) {
-        switch (eventType) {
-            case 'click':
-                this._setPositionWithAnimate(positionInPercent);
-                break;
-            default :
-                this._updatePosition(positionInPercent);
-        }
-    };
-
-
-    /**
-     * Set position with animate
-     * @param newPositionInPercent
-     * @returns {boolean}
-     * @private
-     */
-    Dics.prototype._setPositionWithAnimate = function (newPositionInPercent) {
-        let comparison               = this;
-        let currentPositionInPercent = parseFloat(comparison._items[0].style.width);
-        clearInterval(comparison._animateInterval);
-
-        if (newPositionInPercent == currentPositionInPercent) {
-            return false;
-        }
-        else if (currentPositionInPercent > newPositionInPercent) {
-            decrementPosition();
-        }
-        else {
-            incrementPosition();
-        }
-
-
-        // Support animate functions
-        function incrementPosition() {
-            comparison._animateInterval = setInterval(function () {
-                currentPositionInPercent++;
-                comparison._updatePosition(currentPositionInPercent);
-                if (currentPositionInPercent >= newPositionInPercent) {
-                    setFinalPositionAndClearInterval();
-                }
-            }, 10);
-        }
-
-        function decrementPosition() {
-            comparison._animateInterval = setInterval(function () {
-                currentPositionInPercent--;
-                comparison._updatePosition(currentPositionInPercent);
-                if (currentPositionInPercent <= newPositionInPercent) {
-                    setFinalPositionAndClearInterval();
-                }
-            }, 10);
-        }
-
-        function setFinalPositionAndClearInterval() {
-            comparison._updatePosition(newPositionInPercent);
-            clearInterval(comparison._animateInterval);
-        }
-
-
-    };
-
-
-    /**
-     * Set position item[0]
-     * @param percent
-     * @private
-     */
-    Dics.prototype._updatePosition = function (percent) {
-        this._items[0].style.width = percent + '%';
     };
 
 
@@ -364,7 +286,7 @@
      * @private
      */
     Dics.prototype._setImageSize = function () {
-        this.images[0].style.width = this.container.offsetWidth + 'px';
+        this.images[0].style.width = this.container[this.options.offsetField] + 'px';
     };
 
 

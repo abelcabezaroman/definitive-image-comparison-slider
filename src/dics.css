@@ -23,17 +23,16 @@
     left        : 50%;
     padding     : 5px 25px;
     transform   : translateX(-50%);
-    background  : #ffffff90;
+    background  : rgba(255, 255, 255, 0.50);
     z-index     : 11;
     font-family : Arial, serif;
     color       : #3d3d3d;
     user-select : none;
     font-size   : 13px;
     text-align  : center;
-    width       : 50%;
     margin      : 15px 0;
     transition  : 0.25s background-color ease-in-out;
-
+    white-space : nowrap;
 }
 
 .b-dics__image-container {
@@ -74,14 +73,13 @@
     display       : block;
     padding       : 7px;
     border-radius : 100%;
-    border        : 3px solid #ffffff90;
-    color         : #ffffff90;
+    color         : rgba(255, 255, 255, 0.50);
     position      : absolute;
     top           : 50%;
     left          : 50%;
     transform     : translate(-50%, -50%) rotate(90deg);
     z-index       : 2;
-    font-size     : 25px;
+    font-size     : 24px;
     transition    : 0.25s color ease-in-out, border 0.25s ease-in-out;
 
 }
@@ -94,7 +92,7 @@
     transform        : translateX(-50%);
     height           : 100%;
     width            : 3px;
-    background-color : #ffffff90;
+    background-color : rgba(255, 255, 255, 0.50);
     z-index          : 1;
     transition       : 0.25s background-color ease-in-out;
 }
