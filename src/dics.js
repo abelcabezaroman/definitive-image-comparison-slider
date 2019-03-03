@@ -10,9 +10,9 @@
 
     const defaultOptions = {
         container: null,
-        data: null,
         filters: null,
         hideTexts: null,
+        textPosition: 'top',
         linesOrientation: 'horizontal'
     };
 
@@ -26,8 +26,9 @@
             clearEmpty: true
         });
 
-        this._setOrientation(this.options.linesOrientation);
-        this.container     = this.options.container;
+
+        this.container = this.options.container;
+        this._setOrientation(this.options.linesOrientation, this.container);
         this.images        = this._getImages();
         this.sliders       = [];
         this._activeSlider = null;
@@ -73,7 +74,7 @@
 
         dics.options.container.style.height = `${dics._calcContainerHeight()}px`;
 
-        let initialImagesContainerWidth = dics.container[dics.options.offsetField] / imagesLength;
+        let initialImagesContainerWidth = dics.container[dics.config.offsetSizeField] / imagesLength;
 
         for (let i = 0; i < imagesLength; i++) {
             let image          = dics.images[i];
@@ -86,8 +87,8 @@
 
 
             section.setAttribute('data-function', 'b-dics__section');
-            section.style.width = `${initialImagesContainerWidth}px`;
-            slider.style.left   = `${initialImagesContainerWidth * (i + 1)}px`;
+            section.style[this.config.sizeField]    = `${initialImagesContainerWidth}px`;
+            slider.style[this.config.positionField] = `${initialImagesContainerWidth * (i + 1)}px`;
 
             this.sliders.push(slider);
 
@@ -102,7 +103,7 @@
 
             dics.container.appendChild(section);
 
-            image.style.left = `${ i * -initialImagesContainerWidth }px`;
+            image.style[this.config.positionField] = `${ i * -initialImagesContainerWidth }px`;
 
         }
     };
@@ -119,15 +120,19 @@
 
         let listener = function (event) {
             let position = dics._calcPosition(event);
-            if (position < (dics.sections[dics._activeSlider + 1].offsetLeft + dics.sections[dics._activeSlider + 1][dics.options.offsetField]) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1].offsetLeft + dics.sections[dics._activeSlider - 1][dics.options.offsetField]))) {
+            console.log('##ABEL## >> listener >>  listener', dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField]);
+            console.log('##ABEL## >> listener >>  listener', dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]);
+            console.log('##ABEL## >> listener >>  listener', position < (dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider - 1][dics.config.offsetSizeField])));
+            console.log('##ABEL## >> listener >>  listener', position < (dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]));
+            if (position < (dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider - 1][dics.config.offsetSizeField]))) {
 
                 let beforeSectionsWidth = dics._beforeSectionsWidth(dics.sections, dics.images, dics._activeSlider);
 
-                dics.sliders[dics._activeSlider].style.left = `${position}px`;
+                dics.sliders[dics._activeSlider].style[dics.config.positionField] = `${position}px`;
 
-                let calcMovePixels                                = position - beforeSectionsWidth;
-                dics.sections[dics._activeSlider].style.width     = `${calcMovePixels}px`;
-                dics.sections[dics._activeSlider + 1].style.width = `${dics._beforeNextWidth - (calcMovePixels - dics._beforeActiveWidth) }px`;
+                let calcMovePixels                                                 = position - beforeSectionsWidth;
+                dics.sections[dics._activeSlider].style[dics.config.sizeField]     = `${calcMovePixels}px`;
+                dics.sections[dics._activeSlider + 1].style[dics.config.sizeField] = `${dics._beforeNextWidth - (calcMovePixels - dics._beforeActiveWidth) }px`;
 
                 dics._setLeftToImages(dics.sections, dics.images);
                 dics._slidesFollowSections(dics.sections, dics.sliders);
@@ -141,8 +146,8 @@
             let slider = dics.sliders[i];
             utils.setMultiEvents(slider, ['mousedown', 'touchstart'], function () {
                 dics._activeSlider      = i;
-                dics._beforeActiveWidth = dics.sections[i].getBoundingClientRect().width;
-                dics._beforeNextWidth   = dics.sections[i + 1].getBoundingClientRect().width;
+                dics._beforeActiveWidth = dics.sections[i].getBoundingClientRect()[dics.config.sizeField];
+                dics._beforeNextWidth   = dics.sections[i + 1].getBoundingClientRect()[dics.config.sizeField];
                 slider.classList.add('b-dics__slider--active');
 
                 utils.setMultiEvents(dics.container, ['mousemove', 'touchmove'], listener);
@@ -174,7 +179,7 @@
         for (let i = 0; i < sections.length; i++) {
             let section = sections[i];
             if (i !== activeSlider) {
-                width += section.getBoundingClientRect().width;
+                width += section.getBoundingClientRect()[this.config.sizeField];
             } else {
                 return width
             }
@@ -194,8 +199,8 @@
         for (let i = 0; i < images.length; i++) {
             let image = images[i];
 
-            image.style.left = `-${width}px`;
-            width += sections[i].getBoundingClientRect().width;
+            image.style[this.config.positionField] = `-${width}px`;
+            width += sections[i].getBoundingClientRect()[this.config.sizeField];
         }
     };
 
@@ -203,9 +208,9 @@
         let left = 0;
         for (let i = 0; i < sections.length; i++) {
             let section = sections[i];
-            left += section.getBoundingClientRect().width;
+            left += section.getBoundingClientRect()[this.config.sizeField];
             if (i === this._activeSlider) {
-                sliders[i].style.left = `${left}px`;
+                sliders[i].style[this.config.positionField] = `${left}px`;
             }
         }
     };
@@ -234,7 +239,20 @@
 
         if (options.hideTexts) {
             container.classList.add('b-dics--hide-texts');
+        }
 
+        if (options.linesOrientation === 'vertical') {
+            container.classList.add('b-dics--vertical')
+        }
+
+        if (options.textPosition === 'center') {
+            container.classList.add('b-dics--tp-center')
+        } else if (options.textPosition === 'bottom') {
+            container.classList.add('b-dics--tp-bottom')
+        } else if (options.textPosition === 'left') {
+            container.classList.add('b-dics--tp-left')
+        } else if (options.textPosition === 'right') {
+            container.classList.add('b-dics--tp-right')
         }
     };
     Dics.prototype._createAltText    = function (image, imageContainer) {
@@ -260,10 +278,24 @@
 
 
     Dics.prototype._setOrientation = function (linesOrientation) {
-        if (linesOrientation === 'horizontal') {
-            this.options.offsetField   = 'offsetWidth';
-            this.options.positionField = 'left';
+        this.config = {};
+
+        if (linesOrientation === 'vertical') {
+            this.config.offsetSizeField     = 'offsetHeight';
+            this.config.offsetPositionField = 'offsetTop';
+            this.config.sizeField           = 'height';
+            this.config.positionField       = 'top';
+            this.config.clientField         = 'clientY';
+            this.config.pageField           = 'pageY';
+        } else {
+            this.config.offsetSizeField     = 'offsetWidth';
+            this.config.offsetPositionField = 'offsetLeft';
+            this.config.sizeField           = 'width';
+            this.config.positionField       = 'left';
+            this.config.clientField         = 'clientX';
+            this.config.pageField           = 'pageX';
         }
+
 
     };
 
@@ -275,9 +307,9 @@
      */
     Dics.prototype._calcPosition = function (event) {
         let containerCoords = this.container.getBoundingClientRect();
-        let xPixel          = !isNaN(event.clientX) ? event.clientX : event.touches[0].pageX;
+        let pixel           = !isNaN(event[this.config.clientField]) ? event[this.config.clientField] : event.touches[0][this.config.pageField];
 
-        return containerCoords.left < xPixel ? xPixel - containerCoords.left : 0;
+        return containerCoords[this.config.positionField] < pixel ? pixel - containerCoords[this.config.positionField] : 0;
     };
 
 
@@ -286,7 +318,7 @@
      * @private
      */
     Dics.prototype._setImageSize = function () {
-        this.images[0].style.width = this.container[this.options.offsetField] + 'px';
+        this.images[0].style[this.config.sizeField] = this.container[this.config.offsetSizeField] + 'px';
     };
 
 
