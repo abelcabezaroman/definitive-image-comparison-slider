@@ -24,14 +24,25 @@
             });
 
             new Dics({
-                container: document.querySelectorAll('[data-function="b-dics"]')[2],
-                linesOrientation: 'vertical',
-                textPosition: 'right'
-
+                container: document.querySelectorAll('[data-function="b-dics"]')[2]
             });
 
             new Dics({
                 container: document.querySelectorAll('[data-function="b-dics"]')[3],
+                linesOrientation: 'vertical',
+                textPosition: 'left'
+            });
+
+
+            new Dics({
+                container: document.querySelectorAll('[data-function="b-dics"]')[4],
+                linesOrientation: 'vertical',
+                textPosition: 'right'
+            });
+
+
+            new Dics({
+                container: document.querySelectorAll('[data-function="b-dics"]')[5],
                 filters: ['blur(3px)', 'grayscale(1)', 'sepia(1)', 'saturate(3)']
             });
 
@@ -57,11 +68,24 @@
 
 <div data-function="b-dics" style="width: 750px">
     <img src="src/img/01.jpg">
+    <img src="src/img/02.jpg">
+    <img src="src/img/03.jpg">
+    <img src="src/img/04.jpg">
+</div>
+
+<div data-function="b-dics" style="width: 750px">
+    <img src="src/img/01.jpg" alt="Japan">
     <img src="src/img/02.jpg" alt="Japan Yellow">
     <img src="src/img/03.jpg" alt="Japan Orange">
     <img src="src/img/04.jpg" alt="Japan Black & White">
 </div>
 
+<div data-function="b-dics" style="width: 750px">
+    <img src="src/img/01.jpg" alt="Japan">
+    <img src="src/img/02.jpg" alt="Japan Yellow">
+    <img src="src/img/03.jpg" alt="Japan Orange">
+    <img src="src/img/04.jpg" alt="Japan Black & White">
+</div>
 
 
 <div data-function="b-dics" style="width: 750px">
