@@ -14,7 +14,7 @@
         function domReady() {
             new Dics({
                 container: document.querySelectorAll('[data-function="b-dics"]')[0],
-                textPosition: 'top'
+                textPosition: 'top',
             });
 
             new Dics({
@@ -45,6 +45,10 @@
                 container: document.querySelectorAll('[data-function="b-dics"]')[5],
                 filters: ['blur(3px)', 'grayscale(1)', 'sepia(1)', 'saturate(3)']
             });
+            new Dics({
+                container: document.querySelectorAll('[data-function="b-dics"]')[6],
+                rotate: '45deg'
+            });
 
         }
     </script>
@@ -52,48 +56,80 @@
 </head>
 <body>
 
-<div data-function="b-dics" style="width: 750px">
-    <img src="src/img/01.jpg" alt="Japan">
-    <img src="src/img/02.jpg" alt="Japan Yellow">
-    <img src="src/img/03.jpg" alt="Japan Orange">
-    <img src="src/img/04.jpg" alt="Japan Black & White">
-</div>
 
-<div data-function="b-dics" style="width: 750px">
-    <img src="src/img/01.jpg" alt="Japan">
-    <img src="src/img/02.jpg" alt="Japan Yellow">
-    <img src="src/img/03.jpg" alt="Japan Orange">
-    <img src="src/img/04.jpg" alt="Japan Black & White">
-</div>
+<div style="padding: 50px 0;">
 
-<div data-function="b-dics" style="width: 750px">
-    <img src="src/img/01.jpg">
-    <img src="src/img/02.jpg">
-    <img src="src/img/03.jpg">
-    <img src="src/img/04.jpg">
-</div>
-
-<div data-function="b-dics" style="width: 750px">
-    <img src="src/img/01.jpg" alt="Japan">
-    <img src="src/img/02.jpg" alt="Japan Yellow">
-    <img src="src/img/03.jpg" alt="Japan Orange">
-    <img src="src/img/04.jpg" alt="Japan Black & White">
-</div>
-
-<div data-function="b-dics" style="width: 750px">
-    <img src="src/img/01.jpg" alt="Japan">
-    <img src="src/img/02.jpg" alt="Japan Yellow">
-    <img src="src/img/03.jpg" alt="Japan Orange">
-    <img src="src/img/04.jpg" alt="Japan Black & White">
+    <div data-function="b-dics" style="width: 750px">
+        <img src="src/img/01.jpg" alt="Japan">
+        <img src="src/img/02.jpg" alt="Japan Yellow">
+        <img src="src/img/03.jpg" alt="Japan Orange">
+        <img src="src/img/04.jpg" alt="Japan Black & White">
+    </div>
 </div>
 
 
-<div data-function="b-dics" style="width: 750px">
-    <img src="src/img/01.jpg" alt="Japan blur">
-    <img src="src/img/01.jpg" alt="Japan grayscale">
-    <img src="src/img/01.jpg" alt="Japan sepia">
-    <img src="src/img/01.jpg" alt="Japan saturate">
+<div style="padding: 50px 0;">
+    <div data-function="b-dics">
+        <img src="src/img/01.jpg" alt="Japan">
+        <img src="src/img/02.jpg" alt="Japan Yellow">
+        <img src="src/img/03.jpg" alt="Japan Orange">
+        <img src="src/img/04.jpg" alt="Japan Black & White">
+    </div>
 </div>
+
+
+<div style="padding: 50px 0;">
+
+    <div data-function="b-dics" style="width: 750px">
+        <img src="src/img/01.jpg">
+        <img src="src/img/02.jpg">
+        <img src="src/img/03.jpg">
+        <img src="src/img/04.jpg">
+    </div>
+</div>
+
+
+<div style="padding: 50px 0;">
+
+    <div data-function="b-dics" style="width: 750px">
+        <img src="src/img/01.jpg" alt="Japan">
+        <img src="src/img/02.jpg" alt="Japan Yellow">
+        <img src="src/img/03.jpg" alt="Japan Orange">
+        <img src="src/img/04.jpg" alt="Japan Black & White">
+    </div>
+</div>
+
+
+<div style="padding: 50px 0;">
+
+    <div data-function="b-dics" style="width: 750px">
+        <img src="src/img/01.jpg" alt="Japan">
+        <img src="src/img/02.jpg" alt="Japan Yellow">
+        <img src="src/img/03.jpg" alt="Japan Orange">
+        <img src="src/img/04.jpg" alt="Japan Black & White">
+    </div>
+</div>
+
+
+<div style="padding: 50px 0;">
+    <div data-function="b-dics" style="width: 750px">
+        <img src="src/img/01.jpg" alt="Japan blur">
+        <img src="src/img/01.jpg" alt="Japan grayscale">
+        <img src="src/img/01.jpg" alt="Japan sepia">
+        <img src="src/img/01.jpg" alt="Japan saturate">
+    </div>
+</div>
+
+
+<div style="padding: 50px 0;">
+    <div data-function="b-dics" style="width: 750px">
+        <img src="src/img/01.jpg">
+        <img src="src/img/02.jpg">
+        <img src="src/img/03.jpg">
+        <img src="src/img/04.jpg">
+    </div>
+</div>
+
 
 </body>
 </html>

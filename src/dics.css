@@ -1,10 +1,10 @@
 @import 'assets/style.css';
 
 .b-dics {
-    /* display   : flex; */
     width     : 100%;
     max-width : 100%;
     position  : relative;
+    overflow: hidden;
 }
 
 .b-dics__section {
@@ -49,9 +49,8 @@
     position    : absolute;
     left        : 0;
     top         : 50%;
-    transform   : translateY(-50%);
+    transform: translateY(-50%);
     user-select : none;
-
 }
 
 .b-dics__slider {

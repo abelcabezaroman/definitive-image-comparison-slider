@@ -1,25 +1,34 @@
 /*
- * Dics: Simple multiple image comparison.
+ * Dics: Definitive image comparison slider. A multiple image vanilla comparison slider.
  *
  * By Abel Cabeza Román
  * Src:
  * Example
  */
 
+/**
+ *
+ */
 (function (root) {
 
+    /**
+     *
+     * @type {{container: null, filters: null, hideTexts: null, textPosition: string, linesOrientation: string, rotate: number}}
+     */
     const defaultOptions = {
         container: null,
         filters: null,
         hideTexts: null,
         textPosition: 'top',
-        linesOrientation: 'horizontal'
+        linesOrientation: 'horizontal',
+        rotate: 0
     };
 
 
     /**
-     * Constructor
+     *
      * @param options
+     * @constructor
      */
     function Dics(options) {
         this.options = utils.extend({}, [defaultOptions, options], {
@@ -43,26 +52,9 @@
 
     }
 
-    Dics.prototype._getImages = function () {
-        return this.container.querySelectorAll('img');
-    };
-
-
-    Dics.prototype._getSections = function () {
-        return this.container.querySelectorAll('[data-function="b-dics__section"]');
-    };
-
-    Dics.prototype._createElement = function (elementClass, className) {
-        let newElement = document.createElement(elementClass);
-
-        newElement.classList.add(className);
-
-        return newElement;
-    };
-
 
     /**
-     * Build HTML structure
+     * Build HTML
      * @private
      */
     Dics.prototype._build = function () {
@@ -84,6 +76,7 @@
 
             dics._applyFilter(image, i, dics.options.filters);
             dics._createAltText(image, imageContainer);
+            dics._rotate(image, imageContainer);
 
 
             section.setAttribute('data-function', 'b-dics__section');
@@ -108,6 +101,40 @@
         }
     };
 
+
+    /**
+     *
+     * @returns {NodeListOf<SVGElementTagNameMap[string]> | NodeListOf<HTMLElementTagNameMap[string]> | NodeListOf<Element>}
+     * @private
+     */
+    Dics.prototype._getImages = function () {
+        return this.container.querySelectorAll('img');
+    };
+
+
+    /**
+     *
+     * @returns {NodeListOf<SVGElementTagNameMap[string]> | NodeListOf<HTMLElementTagNameMap[string]> | NodeListOf<Element>}
+     * @private
+     */
+    Dics.prototype._getSections = function () {
+        return this.container.querySelectorAll('[data-function="b-dics__section"]');
+    };
+
+    /**
+     *
+     * @param elementClass
+     * @param className
+     * @returns {HTMLElement | HTMLSelectElement | HTMLLegendElement | HTMLTableCaptionElement | HTMLTextAreaElement | HTMLModElement | HTMLHRElement | HTMLOutputElement | HTMLPreElement | HTMLEmbedElement | HTMLCanvasElement | HTMLFrameSetElement | HTMLMarqueeElement | HTMLScriptElement | HTMLInputElement | HTMLUnknownElement | HTMLMetaElement | HTMLStyleElement | HTMLObjectElement | HTMLTemplateElement | HTMLBRElement | HTMLAudioElement | HTMLIFrameElement | HTMLMapElement | HTMLTableElement | HTMLAnchorElement | HTMLMenuElement | HTMLPictureElement | HTMLParagraphElement | HTMLTableDataCellElement | HTMLTableSectionElement | HTMLQuoteElement | HTMLTableHeaderCellElement | HTMLProgressElement | HTMLLIElement | HTMLTableRowElement | HTMLFontElement | HTMLSpanElement | HTMLTableColElement | HTMLOptGroupElement | HTMLDataElement | HTMLDListElement | HTMLFieldSetElement | HTMLSourceElement | HTMLBodyElement | HTMLDirectoryElement | HTMLDivElement | HTMLUListElement | HTMLHtmlElement | HTMLAreaElement | HTMLMeterElement | HTMLAppletElement | HTMLFrameElement | HTMLOptionElement | HTMLImageElement | HTMLLinkElement | HTMLHeadingElement | HTMLSlotElement | HTMLVideoElement | HTMLBaseFontElement | HTMLTitleElement | HTMLButtonElement | HTMLHeadElement | HTMLParamElement | HTMLTrackElement | HTMLOListElement | HTMLDataListElement | HTMLLabelElement | HTMLFormElement | HTMLTimeElement | HTMLBaseElement}
+     * @private
+     */
+    Dics.prototype._createElement = function (elementClass, className) {
+        let newElement = document.createElement(elementClass);
+
+        newElement.classList.add(className);
+
+        return newElement;
+    };
 
     /**
      * Set need DOM events
@@ -174,6 +201,14 @@
 
     };
 
+    /**
+     *
+     * @param sections
+     * @param images
+     * @param activeSlider
+     * @returns {number}
+     * @private
+     */
     Dics.prototype._beforeSectionsWidth = function (sections, images, activeSlider) {
         let width = 0;
         for (let i = 0; i < sections.length; i++) {
@@ -186,6 +221,11 @@
         }
     };
 
+    /**
+     *
+     * @returns {number}
+     * @private
+     */
     Dics.prototype._calcContainerHeight = function () {
         let imgHeight      = this.images[0].clientHeight;
         let imgWidth       = this.images[0].clientWidth;
@@ -194,6 +234,12 @@
         return (containerWidth / imgWidth) * imgHeight;
     };
 
+    /**
+     *
+     * @param sections
+     * @param images
+     * @private
+     */
     Dics.prototype._setLeftToImages = function (sections, images) {
         let width = 0;
         for (let i = 0; i < images.length; i++) {
@@ -204,6 +250,12 @@
         }
     };
 
+    /**
+     *
+     * @param sections
+     * @param sliders
+     * @private
+     */
     Dics.prototype._slidesFollowSections = function (sections, sliders) {
         let left = 0;
         for (let i = 0; i < sections.length; i++) {
@@ -215,6 +267,10 @@
         }
     };
 
+    /**
+     *
+     * @private
+     */
     Dics.prototype._disableImageDrag = function () {
         for (let i = 0; i < this.images.length; i++) {
             this.sliders[i].addEventListener('dragstart', function (e) {
@@ -226,12 +282,24 @@
         }
     };
 
+    /**
+     *
+     * @param image
+     * @param index
+     * @param filters
+     * @private
+     */
     Dics.prototype._applyFilter = function (image, index, filters) {
         if (filters) {
             image.style.filter = filters[index];
         }
     };
 
+    /**
+     *
+     * @param options
+     * @private
+     */
     Dics.prototype._applyGlobalClass = function (options) {
         let container = options.container;
 
@@ -255,7 +323,15 @@
             container.classList.add('b-dics--tp-right')
         }
     };
-    Dics.prototype._createAltText    = function (image, imageContainer) {
+
+
+    /**
+     *
+     * @param image
+     * @param imageContainer
+     * @private
+     */
+    Dics.prototype._createAltText = function (image, imageContainer) {
         let textContent = image.getAttribute('alt');
         if (textContent) {
             let text = this._createElement('p', 'b-dics__text');
@@ -267,6 +343,23 @@
     };
 
 
+    /**
+     *
+     * @param image
+     * @param imageContainer
+     * @private
+     */
+    Dics.prototype._rotate = function (image, imageContainer) {
+        image.style.rotate          = `-${this.options.rotate}`;
+        imageContainer.style.rotate = this.options.rotate;
+
+    };
+
+
+    /**
+     *
+     * @private
+     */
     Dics.prototype._removeActiveElements = function () {
         let activeElements = Dics.container.querySelectorAll('.b-dics__slider--active');
 
@@ -277,6 +370,11 @@
     };
 
 
+    /**
+     *
+     * @param linesOrientation
+     * @private
+     */
     Dics.prototype._setOrientation = function (linesOrientation) {
         this.config = {};
 
@@ -301,8 +399,9 @@
 
 
     /**
-     * Calc current position (click, touch or move)
+     *
      * @param event
+     * @returns {number}
      * @private
      */
     Dics.prototype._calcPosition = function (event) {
@@ -314,7 +413,7 @@
 
 
     /**
-     * Set the width of image that has a position absolute
+     *
      * @private
      */
     Dics.prototype._setImageSize = function () {
@@ -323,8 +422,8 @@
 
 
     /**
-     * Utils Methods
-     * @type {{extend: Function, getConstructor: Function}}
+     *
+     * @type {{extend: (function(*=, *, *): *), setMultiEvents: setMultiEvents, removeMultiEvents: removeMultiEvents, getConstructor: (function(*=): string)}}
      */
     let utils = {
 
@@ -383,8 +482,9 @@
             }
         },
 
+
         /**
-         * Set Multi addEventListener
+         *
          * @param element
          * @param events
          * @param func
