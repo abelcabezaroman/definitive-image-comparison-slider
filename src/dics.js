@@ -307,7 +307,7 @@
      */
     Dics.prototype._calcPosition = function (event) {
         let containerCoords = this.container.getBoundingClientRect();
-        let pixel           = !isNaN(event[this.config.clientField]) ? event[this.config.clientField] : event.touches[0][this.config.pageField];
+        let pixel           = !isNaN(event[this.config.clientField]) ? event[this.config.clientField] : event.touches[0][this.config.clientField];
 
         return containerCoords[this.config.positionField] < pixel ? pixel - containerCoords[this.config.positionField] : 0;
     };

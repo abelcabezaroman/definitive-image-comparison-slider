@@ -1,0 +1,19 @@
+{
+  "name": "definite-image-comparison-slider",
+  "version": "1.0.0",
+  "description": "Compare all images what you want with a lot of options in Vanilla js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acabezar/definitive-image-comparison-slider-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/acabezar/definitive-image-comparison-slider-/issues"
+  },
+  "homepage": "https://github.com/acabezar/definitive-image-comparison-slider-#readme"
+}
