@@ -1,6 +1,13 @@
 # Dics: Definitive Image Comparison Slider
 
-Vanilla Javascript library to compare multiples images with sliders. Also, you can add text and filters to your images.
+<img
+src="http://codictados.com/wp-content/uploads/2015/07/logo263x781.png"
+alt="Codictados">
+
+Made by Abel Cabeza Román, a Codictados developer.
+
+Vanilla Javascript library to compare multiples images with sliders.
+Also, you can add text and filters to your images.
 
 ## Installation
 
