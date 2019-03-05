@@ -22,8 +22,8 @@ npm i dics
 And import it to your project.
 
 ```html
-<link rel="stylesheet" href="../lib/src/dics.css">
-<script src="src/original/dics.original.js"></script>
+<link rel="stylesheet" href="dics.css">
+<script src="dics.js"></script>
 ```
 
 ## Usage
