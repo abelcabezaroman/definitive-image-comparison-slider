@@ -23,8 +23,7 @@
         linesOrientation: 'horizontal',
         rotate: 0
     };
-
-
+    
     /**
      *
      * @param options
