@@ -4,7 +4,8 @@
 src="http://codictados.com/wp-content/uploads/2015/07/logo263x781.png"
 alt="Codictados"></a>
 
-Made by Abel Cabeza Román, a Codictados developer.
+Made by <a href="http://abelcabezaroman.com/">Abel Cabeza Román</a>, a
+<a href="http://codictados.com">Codictados</a> developer.
 
 ## Description
 
