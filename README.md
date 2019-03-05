@@ -1,15 +1,15 @@
 # Dics: Definitive Image Comparison Slider
 
-<a href="http://codictados.com"><img
+<a target="_blank" href="http://codictados.com"><img
 src="http://codictados.com/wp-content/uploads/2015/07/logo263x781.png"
 alt="Codictados"></a>
 
-Made by <a href="http://abelcabezaroman.com/">Abel Cabeza Román</a>, a
+Made by <a href="http://abelcabezaroman.com/" target="_blank">Abel Cabeza Román</a>, a
 <a href="http://codictados.com">Codictados</a> developer.
 
 ## DEMO
 
-<a
+<a target="_blank"
 href="http://codictados.com/portfolio/definitive-image-comparison-slider-demo/">See
 examples</a>
 
