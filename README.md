@@ -1,20 +1,29 @@
 # Dics: Definitive Image Comparison Slider
 
-<img
+<a href="http://codictados.com"><img
 src="http://codictados.com/wp-content/uploads/2015/07/logo263x781.png"
-alt="Codictados">
+alt="Codictados"></a>
 
 Made by Abel Cabeza Román, a Codictados developer.
 
-Vanilla Javascript library to compare multiples images with sliders.
-Also, you can add text and filters to your images.
+## Description
+
+Light Vanilla Javascript library to compare multiples images with
+sliders. Also, you can add text and filters to your images.
 
 ## Installation
 
-Import dics.js and dics.css to your project.
+Download the library.
 
 ```bash
 npm i definite-image-comparison-slider
+```
+
+And import it to your project.
+
+```html
+<link rel="stylesheet" href="../lib/src/dics.css">
+<script src="src/original/dics.original.js"></script>
 ```
 
 ## Usage
@@ -32,7 +41,7 @@ in the image comparison.
 </div>
 ```
 
-Finally, you need to initialize the component like this:
+Finally, you need to initialize the component like this.
 
 ```javascript
 new Dics({
