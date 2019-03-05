@@ -1,6 +1,6 @@
 {
   "name": "dics",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Compare multiples images easily with this light Vanilla Javascript library.",
   "main": "index.js",
   "scripts": {

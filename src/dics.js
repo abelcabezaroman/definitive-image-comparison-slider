@@ -1,5 +1,3 @@
-"use strict";
-
 /*
  * Dics: Definitive image comparison slider. A multiple image vanilla comparison slider.
  *
@@ -16,7 +14,7 @@
      *
      * @type {{container: null, filters: null, hideTexts: null, textPosition: string, linesOrientation: string, rotate: number}}
      */
-    var defaultOptions = {
+    const defaultOptions = {
         container: null,
         filters: null,
         hideTexts: null,
@@ -59,22 +57,22 @@
 
 
     Dics.prototype._build = function () {
-        var dics = this;
+        let dics = this;
 
         dics._applyGlobalClass(dics.options);
 
-        var imagesLength = dics.images.length;
-        dics.options.container.style.height = "".concat(dics._calcContainerHeight(), "px");
-        var initialImagesContainerWidth = dics.container[dics.config.offsetSizeField] / imagesLength;
+        let imagesLength = dics.images.length;
+        dics.options.container.style.height = `${dics._calcContainerHeight()}px`;
+        let initialImagesContainerWidth = dics.container[dics.config.offsetSizeField] / imagesLength;
 
-        for (var i = 0; i < imagesLength; i++) {
-            var image = dics.images[i];
+        for (let i = 0; i < imagesLength; i++) {
+            let image = dics.images[i];
 
-            var section = dics._createElement('div', 'b-dics__section');
+            let section = dics._createElement('div', 'b-dics__section');
 
-            var imageContainer = dics._createElement('div', 'b-dics__image-container');
+            let imageContainer = dics._createElement('div', 'b-dics__image-container');
 
-            var slider = dics._createElement('div', 'b-dics__slider');
+            let slider = dics._createElement('div', 'b-dics__slider');
 
             dics._applyFilter(image, i, dics.options.filters);
 
@@ -83,8 +81,8 @@
             dics._rotate(image, imageContainer);
 
             section.setAttribute('data-function', 'b-dics__section');
-            section.style[this.config.sizeField] = "".concat(initialImagesContainerWidth, "px");
-            slider.style[this.config.positionField] = "".concat(initialImagesContainerWidth * (i + 1), "px");
+            section.style[this.config.sizeField] = `${initialImagesContainerWidth}px`;
+            slider.style[this.config.positionField] = `${initialImagesContainerWidth * (i + 1)}px`;
             this.sliders.push(slider);
             image.classList.add('b-dics__image');
             section.appendChild(imageContainer);
@@ -95,7 +93,7 @@
             }
 
             dics.container.appendChild(section);
-            image.style[this.config.positionField] = "".concat(i * -initialImagesContainerWidth, "px");
+            image.style[this.config.positionField] = `${i * -initialImagesContainerWidth}px`;
         }
     };
     /**
@@ -128,7 +126,7 @@
 
 
     Dics.prototype._createElement = function (elementClass, className) {
-        var newElement = document.createElement(elementClass);
+        let newElement = document.createElement(elementClass);
         newElement.classList.add(className);
         return newElement;
     };
@@ -139,25 +137,20 @@
 
 
     Dics.prototype._setEvents = function () {
-        var dics = this;
+        let dics = this;
 
         dics._disableImageDrag();
 
-        var listener = function listener(event) {
-            var position = dics._calcPosition(event);
-
-            console.log('##ABEL## >> listener >>  listener', dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField]);
-            console.log('##ABEL## >> listener >>  listener', dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]);
-            console.log('##ABEL## >> listener >>  listener', position < dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField] && (dics._activeSlider === 0 || position > dics.sections[dics._activeSlider - 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider - 1][dics.config.offsetSizeField]));
-            console.log('##ABEL## >> listener >>  listener', position < dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]);
+        let listener = function (event) {
+            let position = dics._calcPosition(event);
 
             if (position < dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField] && (dics._activeSlider === 0 || position > dics.sections[dics._activeSlider - 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider - 1][dics.config.offsetSizeField])) {
-                var beforeSectionsWidth = dics._beforeSectionsWidth(dics.sections, dics.images, dics._activeSlider);
+                let beforeSectionsWidth = dics._beforeSectionsWidth(dics.sections, dics.images, dics._activeSlider);
 
-                dics.sliders[dics._activeSlider].style[dics.config.positionField] = "".concat(position, "px");
-                var calcMovePixels = position - beforeSectionsWidth;
-                dics.sections[dics._activeSlider].style[dics.config.sizeField] = "".concat(calcMovePixels, "px");
-                dics.sections[dics._activeSlider + 1].style[dics.config.sizeField] = "".concat(dics._beforeNextWidth - (calcMovePixels - dics._beforeActiveWidth), "px");
+                dics.sliders[dics._activeSlider].style[dics.config.positionField] = `${position}px`;
+                let calcMovePixels = position - beforeSectionsWidth;
+                dics.sections[dics._activeSlider].style[dics.config.sizeField] = `${calcMovePixels}px`;
+                dics.sections[dics._activeSlider + 1].style[dics.config.sizeField] = `${dics._beforeNextWidth - (calcMovePixels - dics._beforeActiveWidth)}px`;
 
                 dics._setLeftToImages(dics.sections, dics.images);
 
@@ -167,8 +160,8 @@
 
         dics.container.addEventListener('click', listener);
 
-        var _loop = function _loop(i) {
-            var slider = dics.sliders[i];
+        for (let i = 0; i < dics.sliders.length; i++) {
+            let slider = dics.sliders[i];
             utils.setMultiEvents(slider, ['mousedown', 'touchstart'], function () {
                 dics._activeSlider = i;
                 dics._beforeActiveWidth = dics.sections[i].getBoundingClientRect()[dics.config.sizeField];
@@ -176,37 +169,14 @@
                 slider.classList.add('b-dics__slider--active');
                 utils.setMultiEvents(dics.container, ['mousemove', 'touchmove'], listener);
             });
-        };
-
-        for (var i = 0; i < dics.sliders.length; i++) {
-            _loop(i);
         }
 
-        var listener2 = function listener2() {
-            var activeElements = dics.container.querySelectorAll('.b-dics__slider--active');
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
+        let listener2 = function () {
+            let activeElements = dics.container.querySelectorAll('.b-dics__slider--active');
 
-            try {
-                for (var _iterator = activeElements[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                    var activeElement = _step.value;
-                    activeElement.classList.remove('b-dics__slider--active');
-                    utils.removeMultiEvents(dics.container, ['mousemove', 'touchmove'], listener);
-                }
-            } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion && _iterator.return != null) {
-                        _iterator.return();
-                    }
-                } finally {
-                    if (_didIteratorError) {
-                        throw _iteratorError;
-                    }
-                }
+            for (let activeElement of activeElements) {
+                activeElement.classList.remove('b-dics__slider--active');
+                utils.removeMultiEvents(dics.container, ['mousemove', 'touchmove'], listener);
             }
         };
 
@@ -226,10 +196,10 @@
 
 
     Dics.prototype._beforeSectionsWidth = function (sections, images, activeSlider) {
-        var width = 0;
+        let width = 0;
 
-        for (var i = 0; i < sections.length; i++) {
-            var section = sections[i];
+        for (let i = 0; i < sections.length; i++) {
+            let section = sections[i];
 
             if (i !== activeSlider) {
                 width += section.getBoundingClientRect()[this.config.sizeField];
@@ -246,9 +216,9 @@
 
 
     Dics.prototype._calcContainerHeight = function () {
-        var imgHeight = this.images[0].clientHeight;
-        var imgWidth = this.images[0].clientWidth;
-        var containerWidth = this.options.container.getBoundingClientRect().width;
+        let imgHeight = this.images[0].clientHeight;
+        let imgWidth = this.images[0].clientWidth;
+        let containerWidth = this.options.container.getBoundingClientRect().width;
         return containerWidth / imgWidth * imgHeight;
     };
     /**
@@ -260,11 +230,11 @@
 
 
     Dics.prototype._setLeftToImages = function (sections, images) {
-        var width = 0;
+        let width = 0;
 
-        for (var i = 0; i < images.length; i++) {
-            var image = images[i];
-            image.style[this.config.positionField] = "-".concat(width, "px");
+        for (let i = 0; i < images.length; i++) {
+            let image = images[i];
+            image.style[this.config.positionField] = `-${width}px`;
             width += sections[i].getBoundingClientRect()[this.config.sizeField];
         }
     };
@@ -277,14 +247,14 @@
 
 
     Dics.prototype._slidesFollowSections = function (sections, sliders) {
-        var left = 0;
+        let left = 0;
 
-        for (var i = 0; i < sections.length; i++) {
-            var section = sections[i];
+        for (let i = 0; i < sections.length; i++) {
+            let section = sections[i];
             left += section.getBoundingClientRect()[this.config.sizeField];
 
             if (i === this._activeSlider) {
-                sliders[i].style[this.config.positionField] = "".concat(left, "px");
+                sliders[i].style[this.config.positionField] = `${left}px`;
             }
         }
     };
@@ -295,7 +265,7 @@
 
 
     Dics.prototype._disableImageDrag = function () {
-        for (var i = 0; i < this.images.length; i++) {
+        for (let i = 0; i < this.images.length; i++) {
             this.sliders[i].addEventListener('dragstart', function (e) {
                 e.preventDefault();
             });
@@ -326,7 +296,7 @@
 
 
     Dics.prototype._applyGlobalClass = function (options) {
-        var container = options.container;
+        let container = options.container;
         container.classList.add('b-dics');
 
         if (options.hideTexts) {
@@ -356,10 +326,10 @@
 
 
     Dics.prototype._createAltText = function (image, imageContainer) {
-        var textContent = image.getAttribute('alt');
+        let textContent = image.getAttribute('alt');
 
         if (textContent) {
-            var text = this._createElement('p', 'b-dics__text');
+            let text = this._createElement('p', 'b-dics__text');
 
             text.appendChild(document.createTextNode(textContent));
             imageContainer.appendChild(text);
@@ -374,7 +344,7 @@
 
 
     Dics.prototype._rotate = function (image, imageContainer) {
-        image.style.rotate = "-".concat(this.options.rotate);
+        image.style.rotate = `-${this.options.rotate}`;
         imageContainer.style.rotate = this.options.rotate;
     };
     /**
@@ -384,30 +354,11 @@
 
 
     Dics.prototype._removeActiveElements = function () {
-        var activeElements = Dics.container.querySelectorAll('.b-dics__slider--active');
-        var _iteratorNormalCompletion2 = true;
-        var _didIteratorError2 = false;
-        var _iteratorError2 = undefined;
+        let activeElements = Dics.container.querySelectorAll('.b-dics__slider--active');
 
-        try {
-            for (var _iterator2 = activeElements[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                var activeElement = _step2.value;
-                activeElement.classList.remove('b-dics__slider--active');
-                utils.removeMultiEvents(Dics.container, ['mousemove', 'touchmove'], Dics.prototype._removeActiveElements);
-            }
-        } catch (err) {
-            _didIteratorError2 = true;
-            _iteratorError2 = err;
-        } finally {
-            try {
-                if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-                    _iterator2.return();
-                }
-            } finally {
-                if (_didIteratorError2) {
-                    throw _iteratorError2;
-                }
-            }
+        for (let activeElement of activeElements) {
+            activeElement.classList.remove('b-dics__slider--active');
+            utils.removeMultiEvents(Dics.container, ['mousemove', 'touchmove'], Dics.prototype._removeActiveElements);
         }
     };
     /**
@@ -445,8 +396,8 @@
 
 
     Dics.prototype._calcPosition = function (event) {
-        var containerCoords = this.container.getBoundingClientRect();
-        var pixel = !isNaN(event[this.config.clientField]) ? event[this.config.clientField] : event.touches[0][this.config.clientField];
+        let containerCoords = this.container.getBoundingClientRect();
+        let pixel = !isNaN(event[this.config.clientField]) ? event[this.config.clientField] : event.touches[0][this.config.clientField];
         return containerCoords[this.config.positionField] < pixel ? pixel - containerCoords[this.config.positionField] : 0;
     };
     /**
@@ -464,7 +415,7 @@
      */
 
 
-    var utils = {
+    let utils = {
         /**
          * Native extend object
          * @param target
@@ -472,17 +423,17 @@
          * @param options
          * @returns {*}
          */
-        extend: function extend(target, objects, options) {
-            for (var object in objects) {
+        extend: function (target, objects, options) {
+            for (let object in objects) {
                 if (objects.hasOwnProperty(object)) {
                     recursiveMerge(target, objects[object]);
                 }
             }
 
             function recursiveMerge(target, object) {
-                for (var property in object) {
+                for (let property in object) {
                     if (object.hasOwnProperty(property)) {
-                        var current = object[property];
+                        let current = object[property];
 
                         if (utils.getConstructor(current) === 'Object') {
                             if (!target[property]) {
@@ -513,8 +464,8 @@
          * @param events
          * @param func
          */
-        setMultiEvents: function setMultiEvents(element, events, func) {
-            for (var i = 0; i < events.length; i++) {
+        setMultiEvents: function (element, events, func) {
+            for (let i = 0; i < events.length; i++) {
                 element.addEventListener(events[i], func);
             }
         },
@@ -525,8 +476,8 @@
          * @param events
          * @param func
          */
-        removeMultiEvents: function removeMultiEvents(element, events, func) {
-            for (var i = 0; i < events.length; i++) {
+        removeMultiEvents: function (element, events, func) {
+            for (let i = 0; i < events.length; i++) {
                 element.removeEventListener(events[i], func, false);
             }
         },
@@ -536,7 +487,7 @@
          * @param object
          * @returns {string}
          */
-        getConstructor: function getConstructor(object) {
+        getConstructor: function (object) {
             return Object.prototype.toString.call(object).slice(8, -1);
         }
     };
@@ -548,4 +499,4 @@
     } else {
         root.Dics = Dics;
     }
-})(void 0);
+})(this);

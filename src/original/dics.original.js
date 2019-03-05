@@ -146,10 +146,6 @@
 
         let listener = function (event) {
             let position = dics._calcPosition(event);
-            console.log('##ABEL## >> listener >>  listener', dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField]);
-            console.log('##ABEL## >> listener >>  listener', dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]);
-            console.log('##ABEL## >> listener >>  listener', position < (dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider - 1][dics.config.offsetSizeField])));
-            console.log('##ABEL## >> listener >>  listener', position < (dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]));
             if (position < (dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider - 1][dics.config.offsetSizeField]))) {
 
                 let beforeSectionsWidth = dics._beforeSectionsWidth(dics.sections, dics.images, dics._activeSlider);
