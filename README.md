@@ -16,7 +16,7 @@ sliders. Also, you can add text and filters to your images.
 Download the library.
 
 ```bash
-npm i definite-image-comparison-slider
+npm i dics
 ```
 
 And import it to your project.

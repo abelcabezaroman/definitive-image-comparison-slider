@@ -1,7 +1,7 @@
 {
-  "name": "definite-image-comparison-slider",
-  "version": "1.0.0",
-  "description": "Compare all images what you want with a lot of options in Vanilla js",
+  "name": "dics",
+  "version": "1.0.3",
+  "description": "Compare multiples images easily with this light Vanilla Javascript library.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
