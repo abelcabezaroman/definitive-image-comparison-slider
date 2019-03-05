@@ -7,6 +7,12 @@ alt="Codictados"></a>
 Made by <a href="http://abelcabezaroman.com/">Abel Cabeza Román</a>, a
 <a href="http://codictados.com">Codictados</a> developer.
 
+## DEMO
+
+<a
+href="http://codictados.com/portfolio/definitive-image-comparison-slider-demo/">See
+examples</a>
+
 ## Description
 
 Light Vanilla Javascript library to compare multiples images with
