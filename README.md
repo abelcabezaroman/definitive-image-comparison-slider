@@ -64,9 +64,9 @@ If you want you can include different options.
 | --- | --- | --- |
 | container | **REQUIRED**: HTML container | `document.querySelector('[data-function="b-dics"]')` |
 | filters | Array of CSS string filters  |`['blur(3px)', 'grayscale(1)', 'sepia(1)', 'saturate(3)']` |
-| hideTexts | Hide All texts, even if you add the alt attribute |`true`,`false`|
+| hideTexts | Show text only when you hover the image container |`true`,`false`|
 | textPosition | Set the prefer text position  |`'center'`,`'top'`, `'right'`, `'bottom'`, `'left'` |
-| linesOrientation | Orientation fo lines  |`'horizontal'`,`'vertical'` |
+| linesOrientation | Change the orientation of lines  |`'horizontal'`,`'vertical'` |
 | rotate | Rotate the image container (not too useful but it's a beatiful effect. String of rotate CSS rule)  |`'45deg'`|
 
 
