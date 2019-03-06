@@ -13,6 +13,12 @@ Made by <a href="http://abelcabezaroman.com/" target="_blank">Abel Cabeza Román
 href="http://codictados.com/portfolio/definitive-image-comparison-slider-demo/">See
 examples</a>
 
+
+## Working on it
+
+I am going to update the library constalty during this week...sooo
+¡¡Wait for improvements!!
+
 ## Description
 
 Light Vanilla Javascript library to compare multiples images with
@@ -69,11 +75,6 @@ If you want you can include different options.
 | linesOrientation | Change the orientation of lines  |`'horizontal'`,`'vertical'` |
 | rotate | Rotate the image container (not too useful but it's a beatiful effect. String of rotate CSS rule)  |`'45deg'`|
 
-
-## Updating
-
-I am going to update the library constalty during this week...sooo
-¡¡Wait for improvements!!
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first
