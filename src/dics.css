@@ -20,22 +20,15 @@
     top         : 0;
     left        : 50%;
     padding     : 5px 25px;
-    -webkit-transform   : translateX(-50%);
-    -ms-transform   : translateX(-50%);
     transform   : translateX(-50%);
     background  : rgba(255, 255, 255, 0.50);
     z-index     : 11;
     font-family : Arial, serif;
     color       : #3d3d3d;
-    -webkit-user-select : none;
-    -moz-user-select : none;
-    -ms-user-select : none;
     user-select : none;
     font-size   : 13px;
     text-align  : center;
     margin      : 16px 0;
-    -webkit-transition  : 0.25s background-color ease-in-out;
-    -o-transition  : 0.25s background-color ease-in-out;
     transition  : 0.25s background-color ease-in-out;
     white-space : nowrap;
 
@@ -54,12 +47,7 @@
     position    : absolute;
     left        : 0;
     top         : 50%;
-    -webkit-transform   : translateY(-50%);
-    -ms-transform   : translateY(-50%);
     transform   : translateY(-50%);
-    -webkit-user-select : none;
-    -moz-user-select : none;
-    -ms-user-select : none;
     user-select : none;
     max-width   : none;
 }
@@ -69,39 +57,30 @@
     left         : 100%;
     top          : 0;
     cursor       : pointer;
-    -webkit-transform    : translateX(-50%);
-    -ms-transform    : translateX(-50%);
     transform    : translateX(-50%);
     height       : 100%;
     width        : 3px;
     padding      : 0 30px;
     z-index      : 1;
-    -webkit-transition   : 0.25s border-color, color ease-in-out;
-    -o-transition   : 0.25s border-color, color ease-in-out;
     transition   : 0.25s border-color, color ease-in-out;
-    -ms-touch-action : none;
     touch-action : none;
 }
 
 .b-dics__slider:before {
-    content       : '< >';
+    content       : url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTEyIDUxMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+LnN0MHtvcGFjaXR5OjAuNTtmaWxsOiNGRkZGRkY7fTwvc3R5bGU+PHBhdGggY2xhc3M9InN0MCIgZD0iTTE4MC4yLDEwOC4xbDYxLjctNjIuMmMzLjgtMy44LDguOC01LjksMTQuMS01LjljNS4zLDAsMTAuNCwyLjEsMTQuMSw1LjlsNjEuNyw2Mi4yYzMuOSwzLjksOS4xLDUuOSwxNC4yLDUuOXMxMC4yLTEuOSwxNC4xLTUuOGM3LjgtNy44LDcuOS0yMC40LDAuMS0yOC4zbC02MS43LTYyLjJDMjg3LjIsNi4zLDI3Mi4xLDAsMjU2LDBzLTMxLjIsNi4zLTQyLjUsMTcuOEwxNTEuOCw4MGMtNy44LDcuOC03LjcsMjAuNSwwLjEsMjguM0MxNTkuOCwxMTYsMTcyLjQsMTE1LjksMTgwLjIsMTA4LjF6Ii8+PHBhdGggY2xhc3M9InN0MCIgZD0iTTMzMS44LDQwMy45bC02MS43LDYyLjJjLTMuOCwzLjgtOC44LDUuOS0xNC4xLDUuOWMtNS4zLDAtMTAuNC0yLjEtMTQuMS01LjlsLTYxLjctNjIuMmMtNy44LTcuOC0yMC40LTcuOS0yOC4zLTAuMWMtNy44LDcuOC03LjksMjAuNC0wLjEsMjguM2w2MS43LDYyLjJjMTEuNCwxMS40LDI2LjUsMTcuOCw0Mi41LDE3LjhzMzEuMi02LjMsNDIuNS0xNy44bDYxLjctNjIuMmM3LjgtNy44LDcuNy0yMC41LTAuMS0yOC4zQzM1Mi4yLDM5NiwzMzkuNiwzOTYuMSwzMzEuOCw0MDMuOXoiLz48L3N2Zz4=);
     font-family   : cursive;
     display       : block;
     padding       : 7px;
     text-align    : center;
-    width         : 100%;
+    width         : 26px;
     border-radius : 100%;
     color         : rgba(255, 255, 255, 0.50);
     position      : absolute;
     top           : 50%;
     left          : 50%;
-    -webkit-transform     : translate(-50%, -50%);
-    -ms-transform     : translate(-50%, -50%);
-    transform     : translate(-50%, -50%);
+    transform     : translate(-50%, -50%) rotate(90deg);
     z-index       : 2;
-    font-size     : 21px;
-    -webkit-transition    : 0.25s color ease-in-out, border 0.25s ease-in-out;
-    -o-transition    : 0.25s color ease-in-out, border 0.25s ease-in-out;
+    font-size     : 0;
     transition    : 0.25s color ease-in-out, border 0.25s ease-in-out;
 }
 
@@ -110,15 +89,11 @@
     position         : absolute;
     left             : 50%;
     top              : 0;
-    -webkit-transform        : translateX(-50%);
-    -ms-transform        : translateX(-50%);
     transform        : translateX(-50%);
     height           : 100%;
     width            : 3px;
     background-color : rgba(255, 255, 255, 0.50);
     z-index          : 1;
-    -webkit-transition       : 0.25s background-color ease-in-out;
-    -o-transition       : 0.25s background-color ease-in-out;
     transition       : 0.25s background-color ease-in-out;
 }
 
@@ -136,8 +111,6 @@
 
 .b-dics--tp-center .b-dics__text {
     top       : 50%;
-    -webkit-transform : translate(-50%, -50%);
-    -ms-transform : translate(-50%, -50%);
     transform : translate(-50%, -50%);
     margin    : 0;
 }
@@ -145,16 +118,12 @@
 .b-dics--tp-bottom .b-dics__text {
     top       : initial;
     bottom    : 0;
-    -webkit-transform : translate(-50%, -50%);
-    -ms-transform : translate(-50%, -50%);
     transform : translate(-50%, -50%);
 }
 
 .b-dics--tp-left .b-dics__text {
     left      : 0;
     top       : 50%;
-    -webkit-transform : translateY(-50%);
-    -ms-transform : translateY(-50%);
     transform : translateY(-50%);
     margin    : 0 16px;
 }
@@ -163,8 +132,6 @@
     left      : initial;
     right     : 0;
     top       : 50%;
-    -webkit-transform : translateY(-50%);
-    -ms-transform : translateY(-50%);
     transform : translateY(-50%);
     margin    : 0 16px;
 }
@@ -175,8 +142,6 @@
 .b-dics--hide-texts .b-dics__text {
     background : #ffffff;
     opacity    : 0;
-    -webkit-transition : 0.25s opacity ease-in-out;
-    -o-transition : 0.25s opacity ease-in-out;
     transition : 0.25s opacity ease-in-out;
 }
 
@@ -193,8 +158,6 @@
 
 .b-dics--vertical .b-dics__image {
     left      : 50%;
-    -webkit-transform : translateX(-50%);
-    -ms-transform : translateX(-50%);
     transform : translateX(-50%);
     top       : 0;
     width     : 100%;
@@ -203,8 +166,6 @@
 
 .b-dics--vertical .b-dics__slider {
     top       : 100%;
-    -webkit-transform : translateY(-50%);
-    -ms-transform : translateY(-50%);
     transform : translateY(-50%);
     width     : 100%;
     height    : 3px;
@@ -215,15 +176,11 @@
 .b-dics--vertical .b-dics__slider:after {
     top       : 50%;
     left      : 0;
-    -webkit-transform : translateY(-50%);
-    -ms-transform : translateY(-50%);
     transform : translateY(-50%);
     width     : 100%;
     height    : 3px;
 }
 
 .b-dics--vertical .b-dics__slider:before {
-    -webkit-transform : translate(-50%, -50%);
-    -ms-transform : translate(-50%, -50%);
     transform : translate(-50%, -50%);
 }
