@@ -70,6 +70,11 @@ If you want you can include different options.
 | rotate | Rotate the image container (not too useful but it's a beatiful effect. String of rotate CSS rule)  |`'45deg'`|
 
 
+## Updating
+
+I am going to update the library constalty during this week...sooo
+¡¡Wait for improvements!!
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change.
