@@ -34,22 +34,45 @@
             clearEmpty: true
         });
 
-
         this.container = this.options.container;
-        this._setOrientation(this.options.linesOrientation, this.container);
-        this.images        = this._getImages();
-        this.sliders       = [];
-        this._activeSlider = null;
 
         if (this.container == null) {
             console.error('Container element not found!')
+        } else {
+            this._setOpacityContainerForLoading(0); // next opacity container in build
+
+            this._setOrientation(this.options.linesOrientation, this.container);
+            this.images        = this._getImages();
+            this.sliders       = [];
+            this._activeSlider = null;
+
+
+            this._setContainerWidth();
+
+            this._build();
+            this.sections = this._getSections();
+            this._setEvents();
+
         }
-
-        this._build();
-        this.sections = this._getSections();
-        this._setEvents();
-
     }
+
+
+    /**
+     *
+     * @private
+     */
+    Dics.prototype._setContainerWidth = function () {
+        this.options.container.style.height = `${this._calcContainerHeight()}px`;
+    };
+
+
+    /**
+     *
+     * @private
+     */
+    Dics.prototype._setOpacityContainerForLoading = function (opacity) {
+        this.options.container.style.opacity = opacity;
+    };
 
 
     /**
@@ -63,7 +86,6 @@
 
         let imagesLength = dics.images.length;
 
-        dics.options.container.style.height = `${dics._calcContainerHeight()}px`;
 
         let initialImagesContainerWidth = dics.container[dics.config.offsetSizeField] / imagesLength;
 
@@ -97,7 +119,10 @@
 
             image.style[this.config.positionField] = `${ i * -initialImagesContainerWidth }px`;
 
+
         }
+
+        this._setOpacityContainerForLoading(1);
     };
 
 
