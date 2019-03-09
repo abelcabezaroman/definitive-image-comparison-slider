@@ -3,6 +3,7 @@
     max-width : 100%;
     position  : relative;
     overflow  : hidden;
+    transition: .25s opacity ease-in-out;
 }
 
 .b-dics__section {

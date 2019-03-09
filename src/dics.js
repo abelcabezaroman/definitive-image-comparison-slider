@@ -175,14 +175,13 @@
 
                 let beforeSectionsWidth = dics._beforeSectionsWidth(dics.sections, dics.images, dics._activeSlider);
 
+                let calcMovePixels = position - beforeSectionsWidth;
+
                 dics.sliders[dics._activeSlider].style[dics.config.positionField] = `${position}px`;
 
-                let calcMovePixels                                                 = position - beforeSectionsWidth;
-                dics.sections[dics._activeSlider].style[dics.config.sizeField]     = `${calcMovePixels}px`;
-                dics.sections[dics._activeSlider + 1].style[dics.config.sizeField] = `${dics._beforeNextWidth - (calcMovePixels - dics._beforeActiveWidth) }px`;
+                dics._pushSections(calcMovePixels, position);
 
-                dics._setLeftToImages(dics.sections, dics.images);
-                dics._slidesFollowSections(dics.sections, dics.sliders);
+
             }
 
         };
@@ -192,9 +191,7 @@
         for (let i = 0; i < dics.sliders.length; i++) {
             let slider = dics.sliders[i];
             utils.setMultiEvents(slider, ['mousedown', 'touchstart'], function () {
-                dics._activeSlider      = i;
-                dics._beforeActiveWidth = dics.sections[i].getBoundingClientRect()[dics.config.sizeField];
-                dics._beforeNextWidth   = dics.sections[i + 1].getBoundingClientRect()[dics.config.sizeField];
+                dics._activeSlider = i;
                 slider.classList.add('b-dics__slider--active');
 
                 utils.setMultiEvents(dics.container, ['mousemove', 'touchmove'], listener);
@@ -276,15 +273,8 @@
      * @param sliders
      * @private
      */
-    Dics.prototype._slidesFollowSections = function (sections, sliders) {
-        let left = 0;
-        for (let i = 0; i < sections.length; i++) {
-            let section = sections[i];
-            left += section.getBoundingClientRect()[this.config.sizeField];
-            if (i === this._activeSlider) {
-                sliders[i].style[this.config.positionField] = `${left}px`;
-            }
-        }
+    Dics.prototype._slidesFollowSections = function (slider, calcMovePixels) {
+        slider.style[this.config.positionField] = `${calcMovePixels}px`;
     };
 
     /**
@@ -439,6 +429,59 @@
     Dics.prototype._setImageSize = function () {
         this.images[0].style[this.config.sizeField] = this.container[this.config.offsetSizeField] + 'px';
     };
+
+
+    /**
+     *
+     * @private
+     */
+    Dics.prototype._pushSections = function (calcMovePixels, position) {
+
+        // if (this._rePosUnderActualSections(position)) {
+
+
+        let section = this.sections[this._activeSlider];
+        console.log('##ABEL## >> Dics >>  _pushSections', section.getBoundingClientRect());
+        let postActualSection = this.sections[this._activeSlider + 1];
+
+        let sectionWidth = postActualSection[this.config.offsetSizeField] - (calcMovePixels - this.sections[this._activeSlider][this.config.offsetSizeField]);
+
+        section.style[this.config.sizeField]           = `${calcMovePixels}px`;
+        postActualSection.style[this.config.sizeField] = `${sectionWidth}px`;
+
+        this._setLeftToImages(this.sections, this.images);
+
+        // }
+    };
+
+    //
+    // /**
+    //  *
+    //  * @private
+    //  */
+    // Dics.prototype._rePosUnderActualSections = function (position) {
+    //     let isOk                  = true;
+    //     let beforeSumSectionsSize = 0;
+    //     for (let i = 0; i < this._activeSlider; i++) {
+    //         let section = this.sections[i];
+    //
+    //         const sectionSize = section[this.config.offsetSizeField];
+    //         beforeSumSectionsSize += sectionSize;
+    //         const newStats    = beforeSumSectionsSize - position;
+    //
+    //         if (newStats > 0) {
+    //             let postSection = this.sections[i + 2];
+    //
+    //             section.style[this.config.sizeField]              = `${sectionSize - newStats}px`;
+    //             postSection.style[this.config.sizeField]          = `${postSection.getBoundingClientRect()[this.config.sizeField] + newStats}px`;
+    //             this.sections[i + 1].style[this.config.sizeField] = 0;
+    //             return isOk = false;
+    //         }
+    //
+    //
+    //     }
+    //     return isOk;
+    // };
 
 
     /**
