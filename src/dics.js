@@ -435,13 +435,12 @@
      *
      * @private
      */
-    Dics.prototype._pushSections = function (calcMovePixels, position) {
+    Dics.prototype._pushSections = function (calcMovePixels) {
 
         // if (this._rePosUnderActualSections(position)) {
 
 
         let section = this.sections[this._activeSlider];
-        console.log('##ABEL## >> Dics >>  _pushSections', section.getBoundingClientRect());
         let postActualSection = this.sections[this._activeSlider + 1];
 
         let sectionWidth = postActualSection[this.config.offsetSizeField] - (calcMovePixels - this.sections[this._activeSlider][this.config.offsetSizeField]);
