@@ -101,7 +101,7 @@
 
 
             section.setAttribute('data-function', 'b-dics__section');
-            section.style[this.config.sizeField]    = `${initialImagesContainerWidth}px`;
+            section.style.flex                      = `0 0 ${initialImagesContainerWidth}px`;
             slider.style[this.config.positionField] = `${initialImagesContainerWidth * (i + 1)}px`;
 
             this.sliders.push(slider);
@@ -169,20 +169,33 @@
 
         dics._disableImageDrag();
 
+        dics._isGoingRight = null;
+
+        let oldx = 0;
+
         let listener = function (event) {
-            let position = dics._calcPosition(event);
-            if (position < (dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider - 1][dics.config.offsetSizeField]))) {
 
-                let beforeSectionsWidth = dics._beforeSectionsWidth(dics.sections, dics.images, dics._activeSlider);
-
-                let calcMovePixels = position - beforeSectionsWidth;
-
-                dics.sliders[dics._activeSlider].style[dics.config.positionField] = `${position}px`;
-
-                dics._pushSections(calcMovePixels, position);
-
-
+            if (event.pageX < oldx) {
+                dics._isGoingRight = false;
+            } else if (event.pageX > oldx) {
+                dics._isGoingRight = true
             }
+
+            oldx = event.pageX;
+
+            let position = dics._calcPosition(event);
+            // if (position < (dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider - 1][dics.config.offsetSizeField]))) {
+
+            let beforeSectionsWidth = dics._beforeSectionsWidth(dics.sections, dics.images, dics._activeSlider);
+
+            let calcMovePixels = position - beforeSectionsWidth;
+
+            dics.sliders[dics._activeSlider].style[dics.config.positionField] = `${position}px`;
+
+            dics._pushSections(calcMovePixels, position);
+
+
+            // }
 
         };
 
@@ -190,8 +203,11 @@
 
         for (let i = 0; i < dics.sliders.length; i++) {
             let slider = dics.sliders[i];
-            utils.setMultiEvents(slider, ['mousedown', 'touchstart'], function () {
+            utils.setMultiEvents(slider, ['mousedown', 'touchstart'], function (event) {
                 dics._activeSlider = i;
+
+                dics._clickPosition = dics._calcPosition(event);
+
                 slider.classList.add('b-dics__slider--active');
 
                 utils.setMultiEvents(dics.container, ['mousemove', 'touchmove'], listener);
@@ -264,6 +280,8 @@
 
             image.style[this.config.positionField] = `-${width}px`;
             width += sections[i].getBoundingClientRect()[this.config.sizeField];
+            this.sliders[i].style.left             = `${width}px`;
+
         }
     };
 
@@ -435,23 +453,47 @@
      *
      * @private
      */
-    Dics.prototype._pushSections = function (calcMovePixels) {
-
+    Dics.prototype._pushSections = function (calcMovePixels, position) {
         // if (this._rePosUnderActualSections(position)) {
+        this._setFlex(position, this._isGoingRight);
 
-
-        let section = this.sections[this._activeSlider];
+        let section           = this.sections[this._activeSlider];
         let postActualSection = this.sections[this._activeSlider + 1];
+        let sectionWidth      = postActualSection[this.config.offsetSizeField] - (calcMovePixels - this.sections[this._activeSlider][this.config.offsetSizeField]);
 
-        let sectionWidth = postActualSection[this.config.offsetSizeField] - (calcMovePixels - this.sections[this._activeSlider][this.config.offsetSizeField]);
 
-        section.style[this.config.sizeField]           = `${calcMovePixels}px`;
-        postActualSection.style[this.config.sizeField] = `${sectionWidth}px`;
+        section.style.flex           = this._isGoingRight === true ? `2 0 ${calcMovePixels}px` : `1 1 ${calcMovePixels}px`;
+        postActualSection.style.flex = this._isGoingRight === true ? ` ${sectionWidth}px` : `2 0 ${sectionWidth}px`;
 
         this._setLeftToImages(this.sections, this.images);
 
         // }
     };
+
+
+    /**
+     *
+     * @private
+     */
+    Dics.prototype._setFlex = function (position, isGoingRight) {
+        let beforeSumSectionsSize = 0;
+
+        for (let i = 0; i < this.sections.length; i++) {
+            let section       = this.sections[i];
+            const sectionSize = section[this.config.offsetSizeField];
+
+            beforeSumSectionsSize += sectionSize;
+
+            if ((isGoingRight && position > (beforeSumSectionsSize - sectionSize)) || (!isGoingRight && position < beforeSumSectionsSize)) {
+
+                section.style.flex = `1 100 ${sectionSize}px`;
+            } else {
+                section.style.flex = `0 0 ${sectionSize}px`;
+            }
+
+        }
+    };
+
 
     //
     // /**
