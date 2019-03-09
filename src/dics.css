@@ -151,6 +151,10 @@
 /* Vertical Sliders
    ****************************************************************************/
 
+.b-dics--vertical {
+    flex-direction : column;
+}
+
 .b-dics--vertical .b-dics__section {
     float : none;
 }
