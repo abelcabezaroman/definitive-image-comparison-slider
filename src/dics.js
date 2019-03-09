@@ -478,13 +478,14 @@
     Dics.prototype._setFlex = function (position, isGoingRight) {
         let beforeSumSectionsSize = 0;
 
+
         for (let i = 0; i < this.sections.length; i++) {
             let section       = this.sections[i];
             const sectionSize = section[this.config.offsetSizeField];
 
             beforeSumSectionsSize += sectionSize;
 
-            if ((isGoingRight && position > (beforeSumSectionsSize - sectionSize)) || (!isGoingRight && position < beforeSumSectionsSize)) {
+            if ((isGoingRight && position > (beforeSumSectionsSize - sectionSize) && i > this._activeSlider) || (!isGoingRight && position < beforeSumSectionsSize)&& i < this._activeSlider) {
 
                 section.style.flex = `1 100 ${sectionSize}px`;
             } else {
