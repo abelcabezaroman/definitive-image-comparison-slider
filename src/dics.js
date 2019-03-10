@@ -13,7 +13,7 @@
 
     /**
      *
-     * @type {{container: null, filters: null, hideTexts: null, textPosition: string, linesOrientation: string, rotate: number}}
+     * @type {{container: null, filters: null, hideTexts: null, textPosition: string, linesOrientation: string, rotate: number, arrayHexBackgroundColorText: null, arrayHexColorText: null}}
      */
     const defaultOptions = {
         container: null,
@@ -21,7 +21,11 @@
         hideTexts: null,
         textPosition: 'top',
         linesOrientation: 'horizontal',
-        rotate: 0
+        rotate: 0, // rotate the sections
+        arrayHexBackgroundColorText: null, // change the background-color text
+        arrayHexColorText: null, // change the color text
+        linesHexColor: null
+
     };
 
     /**
@@ -93,18 +97,16 @@
             let image          = dics.images[i];
             let section        = dics._createElement('div', 'b-dics__section');
             let imageContainer = dics._createElement('div', 'b-dics__image-container');
-            let slider         = dics._createElement('div', 'b-dics__slider');
+            let slider         = dics._createSlider(i, initialImagesContainerWidth);
+
+            dics._createAltText(image, i, imageContainer);
 
             dics._applyFilter(image, i, dics.options.filters);
-            dics._createAltText(image, imageContainer);
             dics._rotate(image, imageContainer);
 
 
             section.setAttribute('data-function', 'b-dics__section');
-            section.style.flex                      = `0 0 ${initialImagesContainerWidth}px`;
-            slider.style[this.config.positionField] = `${initialImagesContainerWidth * (i + 1)}px`;
-
-            this.sliders.push(slider);
+            section.style.flex = `0 0 ${initialImagesContainerWidth}px`;
 
             image.classList.add('b-dics__image');
 
@@ -278,7 +280,7 @@
         for (let i = 0; i < images.length; i++) {
             let image = images[i];
 
-            image.style[this.config.positionField]           = `-${size}px`;
+            image.style[this.config.positionField] = `-${size}px`;
             size += sections[i].getBoundingClientRect()[this.config.sizeField];
 
             this.sliders[i].style[this.config.positionField] = `${size}px`;
@@ -345,16 +347,40 @@
     };
 
 
+    Dics.prototype._createSlider = function (i, initialImagesContainerWidth) {
+        let slider = this._createElement('div', 'b-dics__slider');
+
+        if (this.options.linesHexColor) {
+            slider.style.color = this.options.linesHexColor;
+        }
+
+        slider.style[this.config.positionField] = `${initialImagesContainerWidth * (i + 1)}px`;
+
+        this.sliders.push(slider);
+
+
+        return slider;
+    };
+
+
     /**
      *
      * @param image
+     * @param i
      * @param imageContainer
      * @private
      */
-    Dics.prototype._createAltText = function (image, imageContainer) {
+    Dics.prototype._createAltText = function (image, i, imageContainer) {
         let textContent = image.getAttribute('alt');
         if (textContent) {
             let text = this._createElement('p', 'b-dics__text');
+
+            if (this.options.arrayHexBackgroundColorText) {
+                text.style.backgroundColor = this.options.arrayHexBackgroundColorText[i];
+            }
+            if (this.options.arrayHexColorText) {
+                text.style.color = this.options.arrayHexColorText[i];
+            }
 
             text.appendChild(document.createTextNode(textContent));
 
