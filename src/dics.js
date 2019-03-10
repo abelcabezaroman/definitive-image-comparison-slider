@@ -87,7 +87,7 @@
         let imagesLength = dics.images.length;
 
 
-        let initialImagesContainerWidth = dics.container[dics.config.offsetSizeField] / imagesLength;
+        let initialImagesContainerWidth = dics.container.getBoundingClientRect()[dics.config.sizeField] / imagesLength;
 
         for (let i = 0; i < imagesLength; i++) {
             let image          = dics.images[i];
@@ -184,7 +184,7 @@
             oldx = event.pageX;
 
             let position = dics._calcPosition(event);
-            // if (position < (dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1][dics.config.offsetSizeField]) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider - 1][dics.config.offsetSizeField]))) {
+            // if (position < (dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1.getBoundingClientRect()][dics.config.sizeField]) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider - 1.getBoundingClientRect()][dics.config.sizeField]))) {
 
             let beforeSectionsWidth = dics._beforeSectionsWidth(dics.sections, dics.images, dics._activeSlider);
 
@@ -445,7 +445,7 @@
      * @private
      */
     Dics.prototype._setImageSize = function () {
-        this.images[0].style[this.config.sizeField] = this.container[this.config.offsetSizeField] + 'px';
+        this.images[0].style[this.config.sizeField] = this.container.getBoundingClientRect()[this.config.sizeField] + 'px';
     };
 
 
@@ -459,7 +459,7 @@
 
         let section           = this.sections[this._activeSlider];
         let postActualSection = this.sections[this._activeSlider + 1];
-        let sectionWidth      = postActualSection[this.config.offsetSizeField] - (calcMovePixels - this.sections[this._activeSlider][this.config.offsetSizeField]);
+        let sectionWidth      = postActualSection.getBoundingClientRect()[this.config.sizeField] - (calcMovePixels - this.sections[this._activeSlider].getBoundingClientRect()[this.config.sizeField]);
 
 
         section.style.flex           = this._isGoingRight === true ? `2 0 ${calcMovePixels}px` : `1 1 ${calcMovePixels}px`;
@@ -476,17 +476,16 @@
      * @private
      */
     Dics.prototype._setFlex = function (position, isGoingRight) {
-        let beforeSumSectionsSize = 0;
+         let beforeSumSectionsSize = 0;
 
 
         for (let i = 0; i < this.sections.length; i++) {
             let section       = this.sections[i];
-            const sectionSize = section[this.config.offsetSizeField];
+            const sectionSize = section.getBoundingClientRect()[this.config.sizeField];
 
             beforeSumSectionsSize += sectionSize;
 
             if ((isGoingRight && position > (beforeSumSectionsSize - sectionSize) && i > this._activeSlider) || (!isGoingRight && position < beforeSumSectionsSize)&& i < this._activeSlider) {
-
                 section.style.flex = `1 100 ${sectionSize}px`;
             } else {
                 section.style.flex = `0 0 ${sectionSize}px`;
@@ -507,7 +506,7 @@
     //     for (let i = 0; i < this._activeSlider; i++) {
     //         let section = this.sections[i];
     //
-    //         const sectionSize = section[this.config.offsetSizeField];
+    //         const sectionSize = section.getBoundingClientRect()[this.config.sizeField];
     //         beforeSumSectionsSize += sectionSize;
     //         const newStats    = beforeSumSectionsSize - position;
     //
