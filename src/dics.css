@@ -4,6 +4,7 @@
     position  : relative;
     overflow  : hidden;
     display   : flex;
+    opacity : 0
 }
 
 .b-dics__section {
@@ -16,22 +17,22 @@
 }
 
 .b-dics__text {
-    position                    : absolute;
-    top                         : 0;
-    left                        : 50%;
-    padding                     : 5px 25px;
-    transform                   : translateX(-50%);
-    background                  : #ffffff;
-    z-index                     : 11;
-    font-family                 : Arial, serif;
-    color                       : #3d3d3d;
-    user-select                 : none;
-    font-size                   : 13px;
-    text-align                  : center;
-    margin                      : 16px 0;
-    white-space                 : nowrap;
-    opacity                     : .7;
-    pointer-events              : none;
+    position       : absolute;
+    top            : 0;
+    left           : 50%;
+    padding        : 5px 25px;
+    transform      : translateX(-50%);
+    background     : #ffffff;
+    z-index        : 11;
+    font-family    : Arial, serif;
+    color          : #3d3d3d;
+    user-select    : none;
+    font-size      : 13px;
+    text-align     : center;
+    margin         : 16px 0;
+    white-space    : nowrap;
+    opacity        : .7;
+    pointer-events : none;
 }
 
 .b-dics__image-container {
