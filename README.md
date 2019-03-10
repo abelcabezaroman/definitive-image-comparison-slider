@@ -66,7 +66,7 @@ Or this.
 
 ```javascript
 new Dics({
-    container: document.querySelectorAll('[data-function="b-dics"]')[3],
+    container: document.querySelectorAll('[data-function="b-dics"]'),
     linesOrientation: 'vertical',
     textPosition: 'left',
     arrayBackgroundColorText: ['#000000', '#FFFFFF'],
