@@ -274,26 +274,18 @@
      * @private
      */
     Dics.prototype._setLeftToImages = function (sections, images) {
-        let width = 0;
+        let size = 0;
         for (let i = 0; i < images.length; i++) {
             let image = images[i];
 
-            image.style[this.config.positionField] = `-${width}px`;
-            width += sections[i].getBoundingClientRect()[this.config.sizeField];
-            this.sliders[i].style.left             = `${width}px`;
+            image.style[this.config.positionField]           = `-${size}px`;
+            size += sections[i].getBoundingClientRect()[this.config.sizeField];
+
+            this.sliders[i].style[this.config.positionField] = `${size}px`;
 
         }
     };
 
-    /**
-     *
-     * @param sections
-     * @param sliders
-     * @private
-     */
-    Dics.prototype._slidesFollowSections = function (slider, calcMovePixels) {
-        slider.style[this.config.positionField] = `${calcMovePixels}px`;
-    };
 
     /**
      *
@@ -476,7 +468,7 @@
      * @private
      */
     Dics.prototype._setFlex = function (position, isGoingRight) {
-         let beforeSumSectionsSize = 0;
+        let beforeSumSectionsSize = 0;
 
 
         for (let i = 0; i < this.sections.length; i++) {
@@ -485,7 +477,7 @@
 
             beforeSumSectionsSize += sectionSize;
 
-            if ((isGoingRight && position > (beforeSumSectionsSize - sectionSize) && i > this._activeSlider) || (!isGoingRight && position < beforeSumSectionsSize)&& i < this._activeSlider) {
+            if ((isGoingRight && position > (beforeSumSectionsSize - sectionSize) && i > this._activeSlider) || (!isGoingRight && position < beforeSumSectionsSize) && i < this._activeSlider) {
                 section.style.flex = `1 100 ${sectionSize}px`;
             } else {
                 section.style.flex = `0 0 ${sectionSize}px`;

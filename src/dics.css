@@ -151,13 +151,13 @@
 /* Vertical Sliders
    ****************************************************************************/
 
-/* TODO arreglar el vertical*/
-/*.b-dics--vertical {*/
-    /*flex-direction : column;*/
-/*}*/
+.b-dics--vertical {
+    flex-direction : column;
+}
 
 .b-dics--vertical .b-dics__section {
-    float : none;
+    height : auto;
+    width  : 100%;
 }
 
 .b-dics--vertical .b-dics__image {
