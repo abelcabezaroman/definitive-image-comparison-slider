@@ -22,9 +22,9 @@
         textPosition: 'top',
         linesOrientation: 'horizontal',
         rotate: 0, // rotate the sections
-        arrayHexBackgroundColorText: null, // change the background-color text
-        arrayHexColorText: null, // change the color text
-        linesHexColor: null
+        arrayBackgroundColorText: null, // change the background-color text
+        arrayColorText: null, // change the color text
+        linesColor: null
 
     };
 
@@ -350,8 +350,8 @@
     Dics.prototype._createSlider = function (i, initialImagesContainerWidth) {
         let slider = this._createElement('div', 'b-dics__slider');
 
-        if (this.options.linesHexColor) {
-            slider.style.color = this.options.linesHexColor;
+        if (this.options.linesColor) {
+            slider.style.color = this.options.linesColor;
         }
 
         slider.style[this.config.positionField] = `${initialImagesContainerWidth * (i + 1)}px`;
@@ -375,11 +375,11 @@
         if (textContent) {
             let text = this._createElement('p', 'b-dics__text');
 
-            if (this.options.arrayHexBackgroundColorText) {
-                text.style.backgroundColor = this.options.arrayHexBackgroundColorText[i];
+            if (this.options.arrayBackgroundColorText) {
+                text.style.backgroundColor = this.options.arrayBackgroundColorText[i];
             }
-            if (this.options.arrayHexColorText) {
-                text.style.color = this.options.arrayHexColorText[i];
+            if (this.options.arrayColorText) {
+                text.style.color = this.options.arrayColorText[i];
             }
 
             text.appendChild(document.createTextNode(textContent));
