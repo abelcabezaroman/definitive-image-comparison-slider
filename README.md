@@ -62,6 +62,19 @@ new Dics({
 });
 ```
 
+Or this.
+
+```javascript
+new Dics({
+    container: document.querySelectorAll('[data-function="b-dics"]')[3],
+    linesOrientation: 'vertical',
+    textPosition: 'left',
+    arrayBackgroundColorText: ['#000000', '#FFFFFF'],
+    arrayColorText: ['#FFFFFF', '#000000'],
+    linesColor: 'rgb(0,0,0)'
+});
+```
+
 ## Options
 
 If you want you can include different options.
@@ -75,7 +88,7 @@ If you want you can include different options.
 | linesOrientation | Change the orientation of lines  |`'horizontal'`,`'vertical'` |
 | rotate | Rotate the image container (not too useful but it's a beatiful effect. String of rotate CSS rule)  |`'45deg'`|
 | arrayBackgroundColorText | Change the bacground-color of sections texts with an array |`['#000000', '#FFFFFF']`|
-| arrayColorText | Change the texts color with an array  |`['#FFFFFF', '#000000']`|
+| arrayColorText | Change the color of texts with an array  |`['#FFFFFF', '#000000']`|
 | linesColor | Change the lines color (only the line, the arrows are a base64 image)  |`'rgb(0,0,0)'`|
 
 
