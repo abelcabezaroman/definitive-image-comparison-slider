@@ -46,7 +46,7 @@ images you want!! If you add the `alt` attribute, you will view the text
 in the image comparison.
 
 ```html
-<div data-function="b-dics">
+<div class="b-dics">
     <img src="01.jpg">
     <img src="02.jpg" alt="Japan Yellow">
     <img src="03.jpg" alt="Japan Orange">
@@ -58,7 +58,7 @@ Finally, you need to initialize the component like this.
 
 ```javascript
 new Dics({
-    container: document.querySelector('[data-function="b-dics"]')
+    container: document.querySelector('.b-dics')
 });
 ```
 
@@ -66,7 +66,7 @@ Or this.
 
 ```javascript
 new Dics({
-    container: document.querySelectorAll('[data-function="b-dics"]'),
+    container: document.querySelectorAll('.b-dics'),
     linesOrientation: 'vertical',
     textPosition: 'left',
     arrayBackgroundColorText: ['#000000', '#FFFFFF'],
@@ -81,7 +81,7 @@ If you want you can include different options.
 
 | Option | Description | Example |
 | --- | --- | --- |
-| container | **REQUIRED**: HTML container | `document.querySelector('[data-function="b-dics"]')` |
+| container | **REQUIRED**: HTML container | `document.querySelector('.b-dics')` |
 | filters | Array of CSS string filters  |`['blur(3px)', 'grayscale(1)', 'sepia(1)', 'saturate(3)']` |
 | hideTexts | Show text only when you hover the image container |`true`,`false`|
 | textPosition | Set the prefer text position  |`'center'`,`'top'`, `'right'`, `'bottom'`, `'left'` |

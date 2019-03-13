@@ -43,7 +43,6 @@
         if (this.container == null) {
             console.error('Container element not found!')
         } else {
-            this._setOpacityContainerForLoading(0); // next opacity container in build
 
             this._setOrientation(this.options.linesOrientation, this.container);
             this.images        = this._getImages();
@@ -51,22 +50,21 @@
             this._activeSlider = null;
 
 
-            this._setContainerWidth();
+            this._setContainerWidth(this.images[0]);
 
             this._build();
             this.sections = this._getSections();
-            this._setEvents();
-
-        }
+            this._setEvents();        }
     }
+
 
 
     /**
      *
      * @private
      */
-    Dics.prototype._setContainerWidth = function () {
-        this.options.container.style.height = `${this._calcContainerHeight()}px`;
+    Dics.prototype._setContainerWidth = function (firstImage) {
+        this.options.container.style.height = `${this._calcContainerHeight(firstImage)}px`;
     };
 
 
@@ -261,13 +259,14 @@
      * @returns {number}
      * @private
      */
-    Dics.prototype._calcContainerHeight = function () {
-        let imgHeight      = this.images[0].clientHeight;
-        let imgWidth       = this.images[0].clientWidth;
+    Dics.prototype._calcContainerHeight = function (firstImage) {
+        let imgHeight      = firstImage.naturalHeight;
+        let imgWidth       = firstImage.naturalWidth;
         let containerWidth = this.options.container.getBoundingClientRect().width;
 
         return (containerWidth / imgWidth) * imgHeight;
     };
+
 
     /**
      *
@@ -325,7 +324,6 @@
     Dics.prototype._applyGlobalClass = function (options) {
         let container = options.container;
 
-        container.classList.add('b-dics');
 
         if (options.hideTexts) {
             container.classList.add('b-dics--hide-texts');
