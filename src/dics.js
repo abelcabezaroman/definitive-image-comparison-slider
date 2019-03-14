@@ -179,13 +179,15 @@
 
         let listener = function (event) {
 
-            if (event.pageX < oldx) {
+            let xPageCoord = event.pageX ? event.pageX : event.touches[0].pageX;
+
+            if (xPageCoord < oldx) {
                 dics._isGoingRight = false;
-            } else if (event.pageX > oldx) {
+            } else if (xPageCoord > oldx) {
                 dics._isGoingRight = true
             }
 
-            oldx = event.pageX;
+            oldx = xPageCoord;
 
             let position = dics._calcPosition(event);
             // if (position < (dics.sections[dics._activeSlider + 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider + 1.getBoundingClientRect()][dics.config.sizeField]) && (dics._activeSlider === 0 || position > (dics.sections[dics._activeSlider - 1][dics.config.offsetPositionField] + dics.sections[dics._activeSlider - 1.getBoundingClientRect()][dics.config.sizeField]))) {
