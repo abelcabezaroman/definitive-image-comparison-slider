@@ -50,13 +50,17 @@
             this._activeSlider = null;
 
 
-            this._setContainerWidth(this.images[0]);
+            let firstImage = this.images[0];
+            firstImage.addEventListener("load", () => {
+                this._setContainerWidth(this.images[0]);
 
-            this._build();
-            this.sections = this._getSections();
-            this._setEvents();        }
+                this._build();
+                this.sections = this._getSections();
+                this._setEvents();
+            });
+
+        }
     }
-
 
 
     /**
