@@ -1,10 +1,10 @@
 .b-dics {
-    width     : 100%;
-    max-width : 100%;
-    position  : relative;
-    overflow  : hidden;
-    display   : flex;
-    opacity   : 0;
+    width            : 100%;
+    max-width        : 100%;
+    position         : relative;
+    overflow         : hidden;
+    display          : flex;
+    opacity          : 0;
 }
 
 .b-dics__section {
@@ -12,8 +12,8 @@
 }
 
 .b-dics__slider:hover :before {
-    color        : #fff;
-    border-color : #fff;
+    color        : #FFFFFF;
+    border-color : #FFFFFF;
 }
 
 .b-dics__text {
@@ -22,7 +22,7 @@
     left           : 50%;
     padding        : 5px 25px;
     transform      : translateX(-50%);
-    background     : #ffffff;
+    background     : #FFFFFF;
     z-index        : 11;
     font-family    : Arial, serif;
     color          : #3d3d3d;

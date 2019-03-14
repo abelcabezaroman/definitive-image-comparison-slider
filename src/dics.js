@@ -233,11 +233,26 @@
         utils.setMultiEvents(document.body, ['mouseup', 'touchend'], listener2);
 
 
-        utils.setMultiEvents(window, ['resize', 'load'], function () {
-            dics._setImageSize();
-        });
+    };
 
-
+    /**
+     *
+     * @param sections
+     * @param images
+     * @param activeSlider
+     * @returns {number}
+     * @private
+     */
+    Dics.prototype._beforeSectionsWidth = function (sections, images, activeSlider) {
+        let width = 0;
+        for (let i = 0; i < sections.length; i++) {
+            let section = sections[i];
+            if (i !== activeSlider) {
+                width += section.getBoundingClientRect()[this.config.sizeField];
+            } else {
+                return width
+            }
+        }
     };
 
     /**
@@ -266,9 +281,9 @@
      * @private
      */
     Dics.prototype._calcContainerHeight = function (firstImage) {
-        let imgHeight      = firstImage.naturalHeight;
-        let imgWidth       = firstImage.naturalWidth;
-        let containerWidth = this.options.container.getBoundingClientRect().width;
+        let imgHeight       = firstImage.naturalHeight;
+        let imgWidth        = firstImage.naturalWidth;
+        let containerWidth  = this.options.container.getBoundingClientRect().width;
 
         return (containerWidth / imgWidth) * imgHeight;
     };
