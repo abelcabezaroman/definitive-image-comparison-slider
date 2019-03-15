@@ -13,12 +13,6 @@ Made by <a href="http://abelcabezaroman.com/" target="_blank">Abel Cabeza Román
 href="http://codictados.com/portfolio/definitive-image-comparison-slider-demo/">See
 examples</a>
 
-
-## Working on it
-
-I am going to update the library constalty during this week...sooo
-¡¡Wait for improvements!!
-
 ## Description
 
 Light Vanilla Javascript library to compare multiples images with
