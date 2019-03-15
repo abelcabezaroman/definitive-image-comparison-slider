@@ -89,7 +89,7 @@ If you want you can include different options.
 | rotate | Rotate the image container (not too useful but it's a beatiful effect. String of rotate CSS rule)  |`'45deg'`|
 | arrayBackgroundColorText | Change the bacground-color of sections texts with an array |`['#000000', '#FFFFFF']`|
 | arrayColorText | Change the color of texts with an array  |`['#FFFFFF', '#000000']`|
-| linesColor | Change the lines color (only the line, the arrows are a base64 image)  |`'rgb(0,0,0)'`|
+| linesColor | Change the lines and arrows color  |`'rgb(0,0,0)'`|
 
 
 ## Contributing

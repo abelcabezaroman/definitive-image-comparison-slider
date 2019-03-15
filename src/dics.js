@@ -1,9 +1,9 @@
 /*
  * Dics: Definitive image comparison slider. A multiple image vanilla comparison slider.
  *
- * By Abel Cabeza Román
+ * By Abel Cabeza Román, a Codictados developer
  * Src: https://github.com/abelcabezaroman/definitive-image-comparison-slider
- * Example
+ * Example: http://codictados.com/portfolio/definitive-image-comparison-slider-demo/
  */
 
 /**
