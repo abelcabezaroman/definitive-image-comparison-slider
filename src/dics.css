@@ -5,10 +5,7 @@
     overflow  : hidden;
     display   : flex;
     opacity   : 0;
-    height    : 0;
 }
-
-
 
 .b-dics__section {
     height : 100%;
