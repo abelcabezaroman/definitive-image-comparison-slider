@@ -84,7 +84,6 @@ Dics.prototype._buidAfterFirstImageLoad = function (firstImage) {
     this._setContainerWidth(firstImage);
 
     this._build();
-    this.sections = this._getSections();
     this._setEvents();
 };
 
@@ -152,6 +151,7 @@ Dics.prototype._build = function () {
 
     }
 
+    this.sections = this._getSections();
     this._setOpacityContainerForLoading(1);
 };
 
