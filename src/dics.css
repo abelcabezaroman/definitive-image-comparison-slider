@@ -1,11 +1,12 @@
 .b-dics {
-    width    : 100%;
-    position : relative;
-    overflow : hidden;
-    display  : -webkit-box;
-    display  : -ms-flexbox;
-    display  : flex;
-    opacity  : 0;
+    width     : 100%;
+    max-width : 100%;
+    position  : relative;
+    overflow  : hidden;
+    display   : -webkit-box;
+    display   : -ms-flexbox;
+    display   : flex;
+    opacity   : 0;
 }
 
 .b-dics__section {
