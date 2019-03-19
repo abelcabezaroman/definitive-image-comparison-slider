@@ -95,8 +95,6 @@ Dics.prototype._buidAfterFirstImageLoad = function (firstImage) {
 
     this._build();
 
-    this.sections = this._getSections();
-
     this._setEvents();
 };
 /**
@@ -159,6 +157,8 @@ Dics.prototype._build = function () {
         dics.container.appendChild(section);
         image.style[this.config.positionField] = "".concat(i * -initialImagesContainerWidth, "px");
     }
+
+    this.sections = this._getSections();
 
     this._setOpacityContainerForLoading(1);
 };
