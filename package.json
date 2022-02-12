@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/acabezar/definitive-image-comparison-slider.git"
+    "url": "git+https://github.com/abelcabezaroman/definitive-image-comparison-slider.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/acabezar/definitive-image-comparison-slider/issues"
+    "url": "https://github.com/abelcabezaroman/definitive-image-comparison-slider/issues"
   },
-  "homepage": "https://github.com/acabezar/definitive-image-comparison-slider#readme"
+  "homepage": "https://github.com/abelcabezaroman/definitive-image-comparison-slider#readme"
 }
