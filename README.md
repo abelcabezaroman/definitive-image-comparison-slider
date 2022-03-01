@@ -15,7 +15,7 @@ examples</a>
 
 ## Description
 
-Light Vanilla Javascript library to compare multiples images with
+Light Vanilla Javascript library (8kb minified) to compare multiples images with
 sliders. Also, you can add text and filters to your images.
 
 ## Installation
